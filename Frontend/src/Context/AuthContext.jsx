@@ -4,11 +4,11 @@ import React, { createContext } from 'react'
 export const authDataContext = createContext() ; 
 
 
-const AuthContext = (children) => {
+const AuthContext = ({children}) => {
 
     const serverUrl = "http://localhost:5000" ; 
 
-    value = {
+    let value = {
         serverUrl
     }
 
