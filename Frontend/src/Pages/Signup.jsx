@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState , useContext } from 'react'
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 import { FaArrowLeftLong } from "react-icons/fa6";
+import { authDataContext } from '../Context/AuthContext';
 
 
 const Signup = () => {
+
+  // Consume the value 
+  const {serverUrl} = useContext(authDataContext) ; 
 
   const navigate = useNavigate() ; 
 
