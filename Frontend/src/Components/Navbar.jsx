@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useContext } from 'react'
 import logo from '/Airbnb-Logo.png'
 import { FiSearch } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -13,13 +13,33 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { FaTreeCity } from "react-icons/fa6";
 import { GiWoodCabin } from "react-icons/gi";
 import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios'; 
+import toast from 'react-hot-toast';
+import { authDataContext } from '../Context/AuthContext';
 
 
 const Navbar = () => {
 
     const navigate = useNavigate() ; 
+    const {serverUrl} = useContext(authDataContext); 
 
     const [showPopUp , setShowPopUp] = useState(false) ; 
+    const [loading , setLoading] = useState(false) ; 
+
+    const LogoutHandler = async () => {
+        try {
+            setLoading(true); 
+            const res = await axios.post(  serverUrl + "/auth/logout" , 
+             {} , {withCredentials : true}); 
+            toast.success(res.data.message);
+        }
+        catch (error) {
+            console.log(error) ;
+        }
+        finally{
+            setLoading(false); 
+        }
+    }
 
 
     return (
@@ -53,7 +73,7 @@ const Navbar = () => {
                     <div className='w-[220px] h-[250px] absolute bg-slate-50 top-[110%] right-[5%] border border-[#aaa9a9] z-10 rounded-lg md:right-[10%]'>
                         <ul className='w-full h-full text-[17px] items-start flex justify-around flex-col'>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => navigate('/login')}>Login</li>
-                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>Logout</li>
+                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={LogoutHandler}> {loading ? 'loading' : 'Logout'} </li>
                             <div className='w-full h-px bg-[#c1c0c0]'></div>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>List your home</li>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>My Listing</li>
