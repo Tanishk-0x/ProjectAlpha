@@ -64,9 +64,10 @@ const Navbar = () => {
                         <span>
                             <GiHamburgerMenu onClick={() => setShowPopUp(prev => !prev)} className='w-5 h-5 cursor-pointer'/>
                         </span> 
-                        <span>
-                            <FaRegUserCircle className='w-[23px] h-[23px] cursor-pointer'/>
-                        </span> 
+                        <span><FaRegUserCircle className='w-[23px] h-[23px] cursor-pointer'/></span> 
+
+                        <span className='h-[30px] w-[30px] bg-[#080808] text-[white] rounded-full flex items-center justify-center cursor-pointer'> {} </span>
+
                     </button>
 
                     { showPopUp && 

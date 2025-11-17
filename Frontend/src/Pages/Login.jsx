@@ -6,12 +6,14 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
 import toast from 'react-hot-toast';
+import { userDataContext } from '../Context/UserContext';
 
 
 const Login = () => {
 
   // Consume the value
   const {serverUrl} = useContext(authDataContext);
+  const {userData , setUserData} = useContext(userDataContext);
 
   const navigate = useNavigate() ; 
 
@@ -29,8 +31,10 @@ const Login = () => {
         {email , password} , {withCredentials : true}
       );
       toast.success(res.data.message); 
+      setUserData(res.data.user);
       setEmail(""); 
       setPassword("");
+      navigate('/');
     }
     catch (error) {
       console.log(error);
