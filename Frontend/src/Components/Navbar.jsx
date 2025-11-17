@@ -16,12 +16,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
 import toast from 'react-hot-toast';
 import { authDataContext } from '../Context/AuthContext';
-
+import { userDataContext } from '../Context/UserContext';
 
 const Navbar = () => {
 
     const navigate = useNavigate() ; 
     const {serverUrl} = useContext(authDataContext); 
+    const {userData , setUserData} = useContext(userDataContext);
 
     const [showPopUp , setShowPopUp] = useState(false) ; 
     const [loading , setLoading] = useState(false) ; 
@@ -64,9 +65,13 @@ const Navbar = () => {
                         <span>
                             <GiHamburgerMenu onClick={() => setShowPopUp(prev => !prev)} className='w-5 h-5 cursor-pointer'/>
                         </span> 
-                        <span><FaRegUserCircle className='w-[23px] h-[23px] cursor-pointer'/></span> 
 
-                        <span className='h-[30px] w-[30px] bg-[#080808] text-[white] rounded-full flex items-center justify-center cursor-pointer'> {} </span>
+                        {
+                            userData == null ? 
+                            <span><FaRegUserCircle className='w-[23px] h-[23px] cursor-pointer'/></span> 
+                            : 
+                            <span className='h-[30px] w-[30px] bg-[#080808] text-[white] rounded-full flex items-center justify-center cursor-pointer'> {userData?.name.slice(0,1)} </span>
+                        }
 
                     </button>
 
