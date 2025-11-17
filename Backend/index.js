@@ -2,6 +2,7 @@ const express = require('express') ;
 require('dotenv').config() ; 
 require('./src/Config/database').dbConnect() ; 
 const authRoutes = require('./src/Routes/authRoutes') ;
+const userRoutes = require('./src/Routes/userRoutes') ; 
 const cookieParser = require('cookie-parser');
 const cors = require('cors') ;
 
@@ -19,6 +20,7 @@ app.use(express.json());
 
 //Mounting
 app.use('/auth' , authRoutes);
+app.use('/user' , userRoutes);
 
 
 //Starting Server
