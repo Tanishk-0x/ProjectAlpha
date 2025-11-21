@@ -60,7 +60,7 @@ const Navbar = () => {
                 </div>
 
                 <div className='relative flex items-center justify-center gap-2.5 '>
-                    <span className='text[20px] cursor-pointer px-2 py-[5px] hover:bg-[#ded9d9] hover: rounded-2xl hidden md:block'> List your home </span>
+                    <span className='text[20px] cursor-pointer px-2 py-[5px] hover:bg-[#ded9d9] hover: rounded-2xl hidden md:block' onClick={() => navigate('/listingpage1')}> List your home </span>
                     <button className='px-5 py-2.5 flex items-center justify-center gap-[5px] border border-[#8d8c8c] rounded-[50px] hover:shadow-lg'>
                         <span>
                             <GiHamburgerMenu onClick={() => setShowPopUp(prev => !prev)} className='w-5 h-5 cursor-pointer'/>
@@ -78,10 +78,13 @@ const Navbar = () => {
                     { showPopUp && 
                     <div className='w-[220px] h-[250px] absolute bg-slate-50 top-[110%] right-[5%] border border-[#aaa9a9] z-10 rounded-lg md:right-[10%]'>
                         <ul className='w-full h-full text-[17px] items-start flex justify-around flex-col'>
-                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => navigate('/login')}>Login</li>
-                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={LogoutHandler}> {loading ? 'loading' : 'Logout'} </li>
+                            {
+                                !userData ? <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => {navigate('/login') ; setShowPopUp(false)}}>Login</li>
+                                :  <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => { LogoutHandler() ; setShowPopUp(false)}}> {loading ? 'loading' : 'Logout'} </li>
+                            }
+                            
                             <div className='w-full h-px bg-[#c1c0c0]'></div>
-                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>List your home</li>
+                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => {navigate('/listingpage1') ; setShowPopUp(false)}}>List your home</li>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>My Listing</li>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>Check Booking</li>
                         </ul>
