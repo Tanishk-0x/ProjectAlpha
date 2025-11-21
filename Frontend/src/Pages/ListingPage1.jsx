@@ -48,7 +48,6 @@ const ListingPage1 = () => {
     }
 
 
-
     return (
       
       <div className='w-full h-screen bg-white flex items-center justify-center relative overflow-auto'>
@@ -110,9 +109,8 @@ const ListingPage1 = () => {
                 <input type="text" onChange={(e) => setLandmark(e.target.value)} value={landmark} placeholder='landmark' id='landmark' required className='w-[90%] h-10 border-2 border-[#555656] rounded-lg text-[18px] px-4' />
               </div>
 
-              
+             
               <button className='py-2.5 bg-[red] text-[white] text-[18px] md: px-[100px] rounded-lg cursor-pointer mt-2' > Next </button>
-
 
           </form>
 
