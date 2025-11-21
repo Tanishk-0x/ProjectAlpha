@@ -2,6 +2,7 @@ import {Routes , Route} from 'react-router-dom'
 import Home from './Pages/Home'
 import Signup from './Pages/Signup'
 import Login from './Pages/Login'
+import ListingPage1 from './Pages/ListingPage1'
 import {Toaster} from 'react-hot-toast'
 
 const App = () => {
@@ -12,6 +13,7 @@ const App = () => {
         <Route path='/' element={<Home/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>} />
+        <Route path='/listingpage1' element={<ListingPage1/>}/>
       </Routes>
 
       <Toaster/>
