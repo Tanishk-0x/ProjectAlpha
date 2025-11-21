@@ -26,7 +26,7 @@ const ListingPage2 = () => {
         </div>
 
         <div className='max-w-[900px] w-full h-[550px] overflow-auto bg-white flex items-center justify-start flex-col gap-10 mt-[30px]'>
-            <h1 className='text-[18px] text-[black] md:text-[30px]'>
+            <h1 className='text-[18px] px-2.5 text-[black] md:text-[30px]'>
                 Which of these best describes your place?
             </h1>
 
@@ -77,7 +77,7 @@ const ListingPage2 = () => {
 
         </div>
 
-        <button className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer absolute right-[5%] bottom-[10%]' > Next </button>
+        <button className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer absolute right-[5%] bottom-[5%]' > Next </button>
 
 
     </div>
