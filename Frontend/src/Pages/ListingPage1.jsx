@@ -10,12 +10,12 @@ const ListingPage1 = () => {
     
     <div className='w-full h-screen bg-white flex items-center justify-center relative overflow-auto'>
 
-        <div className='h-10 w-10 bg-[red] rounded-full flex justify-center items-center top-[5%] left-5 absolute'>
-            <button className='cursor-pointer'><FaArrowLeftLong /></button>
-        </div>
-
         <form action="" 
         className='max-w-[900px] w-[90%] h-[550px] flex items-center justify-start flex-col md:items-start gap-2.5 overflow-auto mt-[50px]'>
+
+            <div className='h-10 w-10 bg-[red] rounded-full flex justify-center items-center top-[5%] left-5 absolute'>
+              <button className='cursor-pointer' onClick={() => navigate('/')}><FaArrowLeftLong /></button>
+            </div>
 
             <div className='w-[200px] h-[50px] text-[20px] bg-[#f14242] text-white flex items-center justify-center rounded-[30px] absolute top-[5%] right-2.5 shadow-lg cursor-pointer'>
                 SetUp Your Home
