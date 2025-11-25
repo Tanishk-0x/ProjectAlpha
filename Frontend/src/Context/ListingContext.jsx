@@ -1,11 +1,15 @@
 import React, { createContext, useContext, useState } from 'react'
 import {authDataContext} from '../Context/AuthContext'
 import axios from 'axios'
+import toast from 'react-hot-toast'; 
+import {useNavigate} from 'react-router-dom'; 
 
 // Creating Context
 export const listingDataContext = createContext() ; 
 
 const ListingContext = ({children}) => {
+
+    const navigate = useNavigate(); 
 
     const {serverUrl} = useContext(authDataContext); 
 
@@ -23,10 +27,13 @@ const ListingContext = ({children}) => {
     const [backEndImage1 , setBackEndImage1] = useState(null);
     const [backEndImage2 , setBackEndImage2] = useState(null); 
     const [backEndImage3 , setBackEndImage3] = useState(null);  
+    
+    const[loading , setLoading] = useState(false); 
 
     const HandleAddListing = async () => {
         try {
             // Formdata
+            setLoading(true); 
             let formData = new FormData(); 
 
             formData.append("title" , title); 
@@ -44,10 +51,28 @@ const ListingContext = ({children}) => {
                 formData , {withCredentials : true}
             ); 
             console.log(res); 
+
+            setTitle(""); 
+            setDescription(""); 
+            setFrontEndImage1(null);
+            setFrontEndImage2(null);
+            setFrontEndImage3(null);
+            setBackEndImage1(null); 
+            setBackEndImage2(null); 
+            setBackEndImage3(null); 
+            setRent(""); 
+            setCity(""); 
+            setLandmark(""); 
+            setCategory("");  
+
+            toast.success(res.data.message); 
+            navigate('/'); 
+            setLoading(false); 
         }
 
         catch (error) {
-            console.log(error);     
+            console.log(error);
+            setLoading(false);      
         }
     }
 
@@ -64,6 +89,7 @@ const ListingContext = ({children}) => {
         backEndImage1,setBackEndImage1 , 
         backEndImage2,setBackEndImage2 , 
         backEndImage3,setBackEndImage3 , 
+        loading , setLoading ,
 
         HandleAddListing , 
     }; 
