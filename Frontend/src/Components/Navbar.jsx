@@ -33,6 +33,7 @@ const Navbar = () => {
             const res = await axios.post(  serverUrl + "/auth/logout" , 
              {} , {withCredentials : true}); 
             toast.success(res.data.message);
+            navigate('/login');
         }
         catch (error) {
             console.log(error) ;
