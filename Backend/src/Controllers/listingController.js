@@ -46,6 +46,25 @@ const addListing = async (req , res) => {
             message : `An Error Occured While Creating Listing ${error}`
         });
     }
+}; 
+
+
+const getListing = async (req , res) => {
+    try {
+        const listing = await Listing.find().sort({createdAt:-1}); 
+        res.status(200).json({
+            success : true , 
+            message : "Listings Fetched SuccessFully" , 
+            listing : listing ,
+        }); 
+    }
+    
+    catch (error) {
+        res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Fetching Listings ${error}`
+        })    
+    }
 }
 
-module.exports = addListing ; 
+module.exports = {addListing , getListing} ; 
