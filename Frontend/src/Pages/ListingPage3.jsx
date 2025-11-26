@@ -20,7 +20,7 @@ const ListingPage3 = () => {
         backEndImage1,setBackEndImage1 , 
         backEndImage2,setBackEndImage2 , 
         backEndImage3,setBackEndImage3 , 
-        loading ,
+        adding ,
         HandleAddListing ,
     } = useContext(listingDataContext);
 
@@ -33,7 +33,7 @@ const ListingPage3 = () => {
         </div>
 
         <div className='w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-2.5'>
-            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden'>
+            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-[70px] md:px-0'>
                 {`In ${landmark.toUpperCase()} , ${city.toUpperCase()}`}
             </h1>
         </div>
@@ -68,7 +68,7 @@ const ListingPage3 = () => {
 
         <div className='w-[95%] h-[50px] flex items-center justify-start px-[110px]'>
             <button disabled={loading} onClick={HandleAddListing} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg right-[5%] bottom-[5%] cursor-pointer'>
-                {loading ? 'Adding..' : 'Add Listing'}
+                {adding ? 'Adding..' : 'Add Listing'}
             </button>
         </div>
 

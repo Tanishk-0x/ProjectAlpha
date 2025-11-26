@@ -1,4 +1,4 @@
-import React, { createContext, use, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import {authDataContext} from '../Context/AuthContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'; 
@@ -29,13 +29,15 @@ const ListingContext = ({children}) => {
     const [backEndImage3 , setBackEndImage3] = useState(null);  
 
     const [listingData , setListingData] = useState([]); 
-    
-    const[loading , setLoading] = useState(false); 
+
+    const [adding , setAdding] = useState(false); 
+    const[loading , setLoading] = useState(false);
+ 
 
     const HandleAddListing = async () => {
         try {
             // Formdata
-            setLoading(true); 
+            setAdding(true); 
             let formData = new FormData(); 
 
             formData.append("title" , title); 
@@ -69,12 +71,12 @@ const ListingContext = ({children}) => {
 
             toast.success(res.data.message); 
             navigate('/'); 
-            setLoading(false); 
+            setAdding(false); 
         }
 
         catch (error) {
             console.log(error);
-            setLoading(false);      
+            setAdding(false);      
         }
     }
 
@@ -93,6 +95,10 @@ const ListingContext = ({children}) => {
             setLoading(false);    
         }
     }
+
+    useEffect(() => {
+        getListings(); 
+    },[adding])
 
     const value = {
         title,setTitle , 
