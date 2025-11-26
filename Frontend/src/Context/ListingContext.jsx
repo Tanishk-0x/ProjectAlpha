@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, use, useContext, useState } from 'react'
 import {authDataContext} from '../Context/AuthContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'; 
@@ -27,6 +27,8 @@ const ListingContext = ({children}) => {
     const [backEndImage1 , setBackEndImage1] = useState(null);
     const [backEndImage2 , setBackEndImage2] = useState(null); 
     const [backEndImage3 , setBackEndImage3] = useState(null);  
+
+    const [listingData , setListingData] = useState([]); 
     
     const[loading , setLoading] = useState(false); 
 
@@ -76,6 +78,22 @@ const ListingContext = ({children}) => {
         }
     }
 
+    const getListings = async () => {
+        try {
+            setLoading(true); 
+            const res = await axios.get(serverUrl + "/listing/get" , 
+                {withCredentials:true}
+            );     
+            setListingData(res.data.listing);
+            setLoading(false);  
+        }
+
+        catch (error) {
+            console.log(error);  
+            setLoading(false);    
+        }
+    }
+
     const value = {
         title,setTitle , 
         description,setDescription , 
@@ -91,6 +109,9 @@ const ListingContext = ({children}) => {
         backEndImage3,setBackEndImage3 , 
         loading , setLoading ,
 
+        listingData , setListingData ,
+
+        getListings , 
         HandleAddListing , 
     }; 
 
