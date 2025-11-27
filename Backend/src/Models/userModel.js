@@ -15,14 +15,15 @@ const userSchema = new mongoose.Schema({
         required : true 
     },
 
-    listing : {
+    listing : [{
         type : mongoose.Schema.Types.ObjectId , 
         ref : "Listing" 
-    }, 
-    booking : {
+    }],
+
+    booking : [{
         type : mongoose.Schema.Types.ObjectId , 
         ref : "Booking"
-    }
+    }]
 
 },{ timestamps:true }); 
 
