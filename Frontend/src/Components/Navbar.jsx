@@ -17,12 +17,20 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { authDataContext } from '../Context/AuthContext';
 import { userDataContext } from '../Context/UserContext';
+import { listingDataContext } from '../Context/ListingContext';
 
 const Navbar = () => {
 
     const navigate = useNavigate() ; 
     const {serverUrl} = useContext(authDataContext); 
     const {userData , setUserData} = useContext(userDataContext);
+    
+    const {
+        listingData , setListingData , 
+        newListingData , setNewListingData 
+    } = useContext(listingDataContext); 
+
+    const [cate , setCate] = useState(''); 
 
     const [showPopUp , setShowPopUp] = useState(false) ; 
     const [loading , setLoading] = useState(false) ; 
@@ -40,6 +48,18 @@ const Navbar = () => {
         }
         finally{
             setLoading(false); 
+        }
+    }
+
+    // Category Handler 
+    const HandleCategory = (category) => {
+        setCate(category);
+
+        if(category == "trending"){
+            setNewListingData(listingData); 
+        }
+        else{
+            setNewListingData(listingData.filter((list) => list.category == category)); 
         }
     }
 
@@ -105,42 +125,52 @@ const Navbar = () => {
             </div>
 
             <div className='w-screen h-[85px] flex items-center justify-start gap-10 overflow-auto md:justify-center px-[15px]'>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+                
+                <div onClick={() => { HandleCategory("trending") ; setCate("")} } className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='trending' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <MdWhatshot className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Trending</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+                
+                <div onClick={() => HandleCategory("villa")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='villa' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <GiFamilyHouse className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Villa</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] text-nowrap'>
+
+                <div onClick={() => HandleCategory("farm house")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='farm house' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <FaTreeCity className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Farm House</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] text-nowrap'>
+
+                <div onClick={() => HandleCategory("pool house")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='pool house' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <MdOutlinePool className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Pool House</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+
+                <div onClick={() => HandleCategory("rooms")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='rooms' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <MdBedroomParent className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Room</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+
+                <div onClick={() => HandleCategory("flat")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='flat' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <MdOutlineMapsHomeWork className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Flat</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+
+                <div onClick={() => HandleCategory("pg")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='pg' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <IoBedOutline className='w-[30px] h-[30px] text-[black] ' />
                     <h3>PG</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+
+                <div onClick={() => HandleCategory("cabin")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='cabin' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <GiWoodCabin className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Cabin</h3>
                 </div>
-                <div className='flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px]'>
+
+                <div onClick={() => HandleCategory("shops")} className={`flex justify-center items-center flex-col  cursor-pointer hover:border-b border-[#a6a5a5] text-[13px] ${cate=='shops' ? 'border-b border-[#a6a5a5]' : '' }`}>
                     <BsShop className='w-[30px] h-[30px] text-[black] ' />
                     <h3>Shops</h3>
                 </div>
+
             </div>
 
         </div>

@@ -29,6 +29,7 @@ const ListingContext = ({children}) => {
     const [backEndImage3 , setBackEndImage3] = useState(null);  
 
     const [listingData , setListingData] = useState([]); 
+    const [newListingData , setNewListingData] = useState([]);
 
     const [adding , setAdding] = useState(false); 
     const[loading , setLoading] = useState(false);
@@ -87,6 +88,7 @@ const ListingContext = ({children}) => {
                 {withCredentials:true}
             );     
             setListingData(res.data.listing);
+            setNewListingData(res.data.listing); 
             setLoading(false);  
         }
 
@@ -114,8 +116,10 @@ const ListingContext = ({children}) => {
         backEndImage2,setBackEndImage2 , 
         backEndImage3,setBackEndImage3 , 
         loading , setLoading ,
+        adding ,
 
         listingData , setListingData ,
+        newListingData , setNewListingData ,
 
         getListings , 
         HandleAddListing , 

@@ -5,7 +5,7 @@ import { listingDataContext } from '../Context/ListingContext'
 
 const Home = () => {
 
-  const {listingData , setListingData} = useContext(listingDataContext); 
+  const {listingData , setListingData , newListingData} = useContext(listingDataContext); 
 
   return (
     <div>
@@ -13,7 +13,7 @@ const Home = () => {
 
       <div className='w-screen h-[77vh] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[180px]'>
         {
-          listingData.map((list) => (
+          newListingData.map((list) => (
             <Card 
               title={list.title} 
               landmark={list.landmark}

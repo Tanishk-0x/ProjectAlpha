@@ -67,7 +67,7 @@ const ListingPage3 = () => {
         </div>
 
         <div className='w-[95%] h-[50px] flex items-center justify-start px-[110px]'>
-            <button disabled={loading} onClick={HandleAddListing} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg right-[5%] bottom-[5%] cursor-pointer'>
+            <button disabled={adding} onClick={HandleAddListing} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg right-[5%] bottom-[5%] cursor-pointer'>
                 {adding ? 'Adding..' : 'Add Listing'}
             </button>
         </div>
