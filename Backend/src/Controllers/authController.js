@@ -48,7 +48,9 @@ const Signup = async (req , res) => {
 const Login = async (req , res) => {
     try {
         const {email , password} = req.body ;
-        const user = await User.findOne({email}); 
+        const user = await User.findOne({email}).populate(
+            "listing" , "title description image1 image2 image3 rent city landmark category"
+        );
 
         if(!user){
             return res.status(404).json({

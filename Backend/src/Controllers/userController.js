@@ -2,7 +2,10 @@ const User = require('../Models/userModel');
 
 const getCurrentUser = async (req , res) => {
     try {
-        const user = await User.findById(req.userId).select('-password'); 
+        const user = await User.findById(req.userId).select('-password').populate(
+            "listing" , "title description image1 image2 image3 rent city landmark category"
+        );
+        
         if(!user){
             res.status(400).json({
                 success : false , 
