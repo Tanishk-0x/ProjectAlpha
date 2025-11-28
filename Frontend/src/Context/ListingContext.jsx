@@ -98,6 +98,20 @@ const ListingContext = ({children}) => {
         }
     }
 
+    const HandleViewCard = async (id) => {
+        try {
+            const res = await axios.get(
+                serverUrl + `/listing/findlistingbyid/${id}` , 
+                {withCredentials:true}
+            );
+            console.log(res.data); 
+        }
+        
+        catch (error) {
+            console.log(error);     
+        }
+    }
+
     useEffect(() => {
         getListings(); 
     },[adding])
@@ -123,6 +137,7 @@ const ListingContext = ({children}) => {
 
         getListings , 
         HandleAddListing , 
+        HandleViewCard ,
     }; 
 
     return (
