@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router() ; 
 const isAuth = require('../Middlewares/authMiddleware'); 
 const Upload = require('../Middlewares/multer');
-const {addListing , getListing} = require('../Controllers/listingController'); 
+const {addListing , getListing , findListing} = require('../Controllers/listingController'); 
+const { find } = require('../Models/listingModel');
 
 router.post('/add' , isAuth , Upload.fields([
     {name:"image1" , maxCount:1 },
@@ -11,6 +12,7 @@ router.post('/add' , isAuth , Upload.fields([
 ]) , addListing ); 
 
 router.get('/get' , getListing); 
+router.get('/findlistingbyid/:id' , isAuth , findListing); 
 
 
 module.exports = router ; 
