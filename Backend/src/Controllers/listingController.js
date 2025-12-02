@@ -94,4 +94,42 @@ const findListing = async (req , res) => {
     }
 }
 
-module.exports = {addListing , getListing , findListing} ; 
+const updateListing = async (req , res) => {
+    try {
+        const {id} = req.params ; 
+        const {title , description , rent , city , landmark , category} = req.body ;
+        
+        const image1 = await uploadOnCloudinary(req.files.image1[0].path); 
+        const image2 = await uploadOnCloudinary(req.files.image2[0].path); 
+        const image3 = await uploadOnCloudinary(req.files.image3[0].path); 
+
+        const listing = await Listing.findByIdAndUpdate( id , {
+            title , 
+            description , 
+            rent , 
+            city , 
+            landmark , 
+            category , 
+            image1 , 
+            image2 ,
+            image3
+        }, { new:true }); 
+
+
+        res.status(201).json({
+            success : true , 
+            message : "Listing Updated SuccessFully" , 
+            listing : listing
+        });
+
+    }
+    
+    catch (error) {
+        res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Updating Listings ${error}`
+        }); 
+    }
+}
+
+module.exports = {addListing , getListing , findListing , updateListing} ; 
