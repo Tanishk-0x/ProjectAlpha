@@ -30,9 +30,11 @@ const ListingContext = ({children}) => {
 
     const [listingData , setListingData] = useState([]); 
     const [newListingData , setNewListingData] = useState([]);
+    const [cardDetails , setCardDetails] = useState(null); 
 
     const [adding , setAdding] = useState(false); 
     const[loading , setLoading] = useState(false);
+    const [updating , setUpdating] = useState(false); 
  
 
     const HandleAddListing = async () => {
@@ -105,6 +107,8 @@ const ListingContext = ({children}) => {
                 {withCredentials:true}
             );
             console.log(res.data); 
+            setCardDetails(res.data.listing);
+            navigate('/viewcard');
         }
         
         catch (error) {
@@ -114,7 +118,7 @@ const ListingContext = ({children}) => {
 
     useEffect(() => {
         getListings(); 
-    },[adding])
+    },[adding , updating]);
 
     const value = {
         title,setTitle , 
@@ -131,9 +135,11 @@ const ListingContext = ({children}) => {
         backEndImage3,setBackEndImage3 , 
         loading , setLoading ,
         adding ,
+        updating , setUpdating , 
 
         listingData , setListingData ,
         newListingData , setNewListingData ,
+        cardDetails , setCardDetails ,
 
         getListings , 
         HandleAddListing , 

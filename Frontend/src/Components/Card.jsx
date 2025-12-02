@@ -1,10 +1,28 @@
 import React, { useContext } from 'react'
+import { userDataContext } from '../Context/UserContext'
+import { listingDataContext } from '../Context/ListingContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const Card = ({title, landmark, city, image1, image2, image3, rent, id,}) => {
 
+  const navigate = useNavigate(); 
+
+  const {userData} = useContext(userDataContext);
+  const {HandleViewCard} = useContext(listingDataContext);
+
+  const HandleClick = () => {
+    if(userData){
+      HandleViewCard(id);
+    }
+    else{
+      navigate('/login');
+    }
+  }
+
   return (
 
-    <div className='w-[330px] max-w-[85%] h-[460px] flex items-start justify-start flex-col rounded-lg curson-pointer'>
+    <div onClick={HandleClick} className='w-[330px] max-w-[85%] h-[460px] flex items-start justify-start flex-col rounded-lg curson-pointer'>
       
       <div className='w-full h-[67%] bg-[#2e2d2d] rounded-lg overflow-auto flex'>
         <img src={image1} alt="" className='w-full shrink-0' />
