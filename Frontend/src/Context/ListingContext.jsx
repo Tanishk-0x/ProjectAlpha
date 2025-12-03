@@ -35,7 +35,7 @@ const ListingContext = ({children}) => {
     const [adding , setAdding] = useState(false); 
     const[loading , setLoading] = useState(false);
     const [updating , setUpdating] = useState(false); 
- 
+    const [deleting , setDeleting] = useState(false); 
 
     const HandleAddListing = async () => {
         try {
@@ -118,7 +118,7 @@ const ListingContext = ({children}) => {
 
     useEffect(() => {
         getListings(); 
-    },[adding , updating]);
+    },[adding , updating , deleting]);
 
     const value = {
         title,setTitle , 
@@ -136,6 +136,7 @@ const ListingContext = ({children}) => {
         loading , setLoading ,
         adding ,
         updating , setUpdating , 
+        deleting , setDeleting ,
 
         listingData , setListingData ,
         newListingData , setNewListingData ,

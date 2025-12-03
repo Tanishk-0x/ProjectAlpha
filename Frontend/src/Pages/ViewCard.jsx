@@ -13,7 +13,7 @@ const ViewCard = () => {
   const navigate = useNavigate(); 
 
   const { serverUrl } = useContext(authDataContext);
-  const { cardDetails , updating , setUpdating } = useContext(listingDataContext);
+  const { cardDetails , updating , setUpdating , deleting , setDeleting } = useContext(listingDataContext);
   const { userData } = useContext(userDataContext);
   const [showUpdatePopUp , setShowUpdatePopUp] = useState(false);
   
@@ -81,6 +81,26 @@ const ViewCard = () => {
   const handleImage3 = (e) => {
     let file = e.target.files[0]; 
     setBackEndImage3(file);
+  }
+
+  // Delete Listing
+  const HandleDeleteListing = async () => {
+    setDeleting(true); 
+    try {
+      const res = await axios.delete(serverUrl + `/listing/deletelistingbyid/${cardDetails._id}` , 
+        {withCredentials : true}
+      ); 
+      console.log(res.data); 
+      toast.success(res.data.message); 
+      setDeleting(false); 
+      navigate('/'); 
+    }
+    
+    catch (error) {
+      console.log(error);  
+      toast.error('Error While Deleting'); 
+      setDeleting(false); 
+    }
   }
 
   return (
@@ -211,8 +231,8 @@ const ViewCard = () => {
                   </button>
                   
                   {/* Delete */}
-                  <button className='px-5 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer mt-2 md:text-[18px] text-nowrap' >
-                    Delete Listing
+                  <button onClick={HandleDeleteListing} className='px-5 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer mt-2 md:text-[18px] text-nowrap' >
+                    { deleting ? 'Deleting' : 'Delete Listing' }
                   </button>
                 </div>
   
