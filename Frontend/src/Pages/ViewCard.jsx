@@ -132,6 +132,7 @@ const ViewCard = () => {
               <button onClick={() => setShowUpdatePopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer text-nowrap'>
                 Edit Listing
               </button>
+              
               :
               <button className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
                 Reserve
@@ -204,9 +205,16 @@ const ViewCard = () => {
                   <input onChange={(e) => setLandmark(e.target.value)} type="text" placeholder='landmark' id='landmark' value={landmark} required className='bg-[white] text-[black] w-[90%] h-10 border-2 border-[#555656] rounded-lg text-[18px] px-4' />
                 </div>
   
-                <button disabled={updating} onClick={HandleUpdateListing} className='py-2.5 bg-[red] text-[white] text-[18px] md: px-[100px] rounded-lg cursor-pointer mt-2' >
-                  { updating ? 'Updating' : 'Update Listing' }
-                </button>
+                <div className='w-full flex items-center justify-center gap-5 '>
+                  <button disabled={updating} onClick={HandleUpdateListing} className='px-5 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer mt-2 md:text-[18px] text-nowrap' >
+                    { updating ? 'Updating' : 'Update Listing' }
+                  </button>
+                  
+                  {/* Delete */}
+                  <button className='px-5 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer mt-2 md:text-[18px] text-nowrap' >
+                    Delete Listing
+                  </button>
+                </div>
   
             </form>          
 
