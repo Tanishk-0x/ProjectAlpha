@@ -141,4 +141,33 @@ const updateListing = async (req , res) => {
     }
 }
 
-module.exports = {addListing , getListing , findListing , updateListing} ; 
+const deleteListing = async (req , res) => {
+    try {
+        const {id} = req.params ; 
+        const listing = await Listing.findByIdAndDelete(id); 
+        const user = await User.findByIdAndUpdate(listing.host , {
+            $pull:{listing:listing._id} , 
+        },{new:true});
+        
+        if(!user){
+            res.status(404).json({
+                success : false , 
+                message : 'User Not Found'
+            });
+        }
+
+        res.status(200).json({
+            success : true , 
+            message : 'Listing Deleted SuccessFully'
+        }); 
+    }
+    
+    catch (error) {
+        res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Deleting Listing ${error}`
+        }); 
+    }
+}
+
+module.exports = {addListing , getListing , findListing , updateListing , deleteListing} ; 
