@@ -46,6 +46,11 @@ const listingSchema = new mongoose.Schema({
         required : true
     }, 
 
+    guest : {
+        type : mongoose.Schema.Types.ObjectId , 
+        ref : "User" , 
+    }, 
+
     isBooked : {
         type : Boolean , 
         default : false 
