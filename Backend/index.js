@@ -4,6 +4,7 @@ require('./src/Config/database').dbConnect() ;
 const authRoutes = require('./src/Routes/authRoutes') ;
 const userRoutes = require('./src/Routes/userRoutes') ; 
 const listingRoutes = require('./src/Routes/listingRoutes') ; 
+const bookingRoutes = require('./src/Routes/bookingRoutes');
 const cookieParser = require('cookie-parser');
 const cors = require('cors') ;
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/auth' , authRoutes);
 app.use('/user' , userRoutes);
 app.use('/listing' , listingRoutes); 
+app.use('/booking' , bookingRoutes); 
 
 //Starting Server
 app.listen(Port , () => {
