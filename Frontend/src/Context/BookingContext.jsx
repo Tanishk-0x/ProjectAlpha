@@ -21,7 +21,7 @@ const BookingContext = ({children}) => {
 
     return (
         <div>
-        // 2.Providing the context / passing the value
+        {/* // 2.Providing the context / passing the value */}
         <bookingDataContext.Provider value={value}>
             {children}
         </bookingDataContext.Provider>

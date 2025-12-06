@@ -8,6 +8,7 @@ import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
 import {toast} from 'react-hot-toast'
 import { IoStar } from "react-icons/io5";
+import { bookingDataContext } from '../Context/bookingContext';
 
 const ViewCard = () => {
 
@@ -16,6 +17,7 @@ const ViewCard = () => {
   const { serverUrl } = useContext(authDataContext);
   const { cardDetails , updating , setUpdating , deleting , setDeleting } = useContext(listingDataContext);
   const { userData } = useContext(userDataContext);
+
   const [showUpdatePopUp , setShowUpdatePopUp] = useState(false);
   const [showBookingPopUp , setShowBookingPopUp] = useState(false); 
   
@@ -29,13 +31,45 @@ const ViewCard = () => {
   const [backEndImage3 , setBackEndImage3] = useState(null); 
 
   const [minDate , setMinDate] = useState(null);
+  const {
+    checkIn , setCheckIn ,
+    checkOut , setCheckOut , 
+    total , setTotal , 
+    night , setNight , 
+  } = useContext(bookingDataContext) ; 
 
   // Handle Minimum Date To Choose 
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0] ; 
     setMinDate(today); // min={minDate}
   },[]);
+
+
+  // Handle TotalRent 
+  useEffect(() => {
+
+    if(checkIn && checkOut){
+      const InDate = new Date(checkIn);
+      const OutDate = new Date(checkOut);
+      const n = (OutDate - InDate) / 24*60*60*1000 ; 
+      setNight(n); 
+
+      // Platform Charges (7%)
+      const platfromCharges = (cardDetails.rent * (7/100));
+      // Tax (8%)
+      const tax = (cardDetails.rent * (8/100));
+      
+      if(n > 0){
+        setTotal((cardDetails.rent * n) + platfromCharges + tax); 
+      }
+      else{
+        setTotal(0);
+      }
+    }
+
+  },[checkIn , checkOut , cardDetails.rent , total]);
   
+
   const HandleUpdateListing = async () => {
         setUpdating(true);
         try { 
@@ -275,12 +309,12 @@ const ViewCard = () => {
 
                 <div className='w-[90%] flex items-center justify-start flex-col gap-2.5 md:gap-6 md:justify-center md:flex-row md:items-start mt-2.5 md:mt-5  ' >
                   <label htmlFor="checkIn" className='text-[18px] md:text-[20px]'>CheckIn</label>
-                  <input type="date" id='checkIn' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
+                  <input type="date" onChange={(e) => setCheckIn(e.target.value)} id='checkIn' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
                 </div>
 
                 <div className='w-[90%] flex items-center justify-start flex-col gap-2.5 md:justify-center md:flex-row md:items-start mt-5 md:mt-10 ' >
                   <label htmlFor="checkOut" className='text-[18px] md:text-[20px]'>CheckOut</label>
-                  <input type="date" id='checkOut' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
+                  <input type="date" onChange={(e) => setCheckOut(e.target.value)} id='checkOut' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
                 </div>
 
                 <div className='w-full flex items-center justify-center'>
@@ -315,7 +349,7 @@ const ViewCard = () => {
               </div>
 
               <div className='w-[95%] h-[60%] border border-[#abaaaa] rounded-lg flex justify-start items-start p-5 gap-[15px] flex-col'>
-                
+
               </div>
 
             </div>
