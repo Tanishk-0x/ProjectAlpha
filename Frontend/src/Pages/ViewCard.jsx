@@ -36,6 +36,7 @@ const ViewCard = () => {
     checkOut , setCheckOut , 
     total , setTotal , 
     night , setNight , 
+    HandleBooking
   } = useContext(bookingDataContext) ; 
 
   // Handle Minimum Date To Choose 
@@ -296,7 +297,8 @@ const ViewCard = () => {
               <RxCross2/>
             </div>
 
-            <form className='max-w-[450px] w-[90%] h-[450px] overflow-auto bg-[#f7fbfcfe] p-5 rounded-lg flex items-center justify-center flex-col gap-2.5 border border-[#dedddd]'>
+            <form onSubmit={(e) => {e.preventDefault()}}
+            className='max-w-[450px] w-[90%] h-[450px] overflow-auto bg-[#f7fbfcfe] p-5 rounded-lg flex items-center justify-center flex-col gap-2.5 border border-[#dedddd]'>
               
               <h1 className='w-full flex items-center justify-center py-2.5 text-[25px] border-b border-[#a3a3a3] '>
                 Confirm & Book
@@ -318,7 +320,7 @@ const ViewCard = () => {
                 </div>
 
                 <div className='w-full flex items-center justify-center'>
-                  <button className='px-20 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer text-nowrap mt-[30px]' >
+                  <button onClick={() => HandleBooking(cardDetails._id)} className='px-20 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer text-nowrap mt-[30px]' >
                     Book Now
                   </button>
                 </div>
