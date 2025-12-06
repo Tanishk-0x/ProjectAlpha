@@ -80,4 +80,35 @@ const createBooking = async (req , res) => {
     }
 }
 
-module.exports = {createBooking}
+const cancelBooking = async (req , res) => {
+    try {
+        const {id} = req.params ; 
+        // IsBooked = False
+        const listing = await Listing.findByIdAndUpdate(id , {isBooked:false})
+        // Update in User's Booking 
+        const user = await User.findByIdAndUpdate(listing.guest , {
+            $pull:{booking:listing._id}
+        },{ new:true });
+
+        if(!user){
+            res.status(404).json({
+                success : false ,
+                message : "User Not Found"
+            }); 
+        }
+
+        res.status(200).json({
+            success : true , 
+            message : "Booking Canceled SuccessFully"
+        }); 
+    }
+    
+    catch (error) {
+       res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Cancel Booking : ${error}`
+        }); 
+    }
+}
+
+module.exports = {createBooking , cancelBooking}
