@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { listingDataContext } from '../Context/ListingContext';
@@ -7,6 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
 import {toast} from 'react-hot-toast'
+import { IoStar } from "react-icons/io5";
 
 const ViewCard = () => {
 
@@ -16,6 +17,7 @@ const ViewCard = () => {
   const { cardDetails , updating , setUpdating , deleting , setDeleting } = useContext(listingDataContext);
   const { userData } = useContext(userDataContext);
   const [showUpdatePopUp , setShowUpdatePopUp] = useState(false);
+  const [showBookingPopUp , setShowBookingPopUp] = useState(false); 
   
   const [title , setTitle] = useState(cardDetails.title); 
   const [description , setDescription] = useState(cardDetails.description); 
@@ -25,6 +27,14 @@ const ViewCard = () => {
   const [backEndImage1 , setBackEndImage1] = useState(null);
   const [backEndImage2 , setBackEndImage2] = useState(null); 
   const [backEndImage3 , setBackEndImage3] = useState(null); 
+
+  const [minDate , setMinDate] = useState(null);
+
+  // Handle Minimum Date To Choose 
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0] ; 
+    setMinDate(today); // min={minDate}
+  },[]);
   
   const HandleUpdateListing = async () => {
         setUpdating(true);
@@ -154,7 +164,7 @@ const ViewCard = () => {
               </button>
               
               :
-              <button className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
+              <button onClick={() => setShowBookingPopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
                 Reserve
               </button>
             }
@@ -238,10 +248,80 @@ const ViewCard = () => {
   
             </form>          
 
-
-
           </div>
         }
+
+
+        {/* Booking PopUp */}
+
+       { showBookingPopUp &&
+
+          <div className='w-full h-full flex items-center justify-center bg-[#000000a9] absolute top-0 z-100 p-5  backdrop-blur-sm md:flex-row md:gap-[100px]'>
+
+            <div onClick={() => setShowBookingPopUp(false)} className='h-8 w-8 bg-[red] rounded-full flex justify-center items-center top-[6%] left-[25px] absolute text-[18px] font-bold'>
+              <RxCross2/>
+            </div>
+
+            <form className='max-w-[450px] w-[90%] h-[450px] overflow-auto bg-[#f7fbfcfe] p-5 rounded-lg flex items-center justify-center flex-col gap-2.5 border border-[#dedddd]'>
+              
+              <h1 className='w-full flex items-center justify-center py-2.5 text-[25px] border-b border-[#a3a3a3] '>
+                Confirm & Book
+              </h1>
+
+              <div className='w-full h-[80%] bg-[#79797933] mt-2.5 rounded-lg p-2.5 md:h-[70%]'>
+                <h3 className='text-[19px] font-semibold'>
+                  Your Trip - 
+                </h3>
+
+                <div className='w-[90%] flex items-center justify-start flex-col gap-2.5 md:gap-6 md:justify-center md:flex-row md:items-start mt-2.5 md:mt-5  ' >
+                  <label htmlFor="checkIn" className='text-[18px] md:text-[20px]'>CheckIn</label>
+                  <input type="date" id='checkIn' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
+                </div>
+
+                <div className='w-[90%] flex items-center justify-start flex-col gap-2.5 md:justify-center md:flex-row md:items-start mt-5 md:mt-10 ' >
+                  <label htmlFor="checkOut" className='text-[18px] md:text-[20px]'>CheckOut</label>
+                  <input type="date" id='checkOut' min={minDate} required className='border-[#555656] border-2 w-[200px] h-10 rounded-[10px] bg-transparent px-2.5 text-[15px] md:text-[18px] ' />
+                </div>
+
+                <div className='w-full flex items-center justify-center'>
+                  <button className='px-20 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer text-nowrap mt-[30px]' >
+                    Book Now
+                  </button>
+                </div>
+
+              </div>
+
+            </form>
+
+            <div className='max-w-[450px] w-[90%] h-[450px] bg-[#f7fbfcfe] p-5 rounded-lg flex items-center justify-center flex-col gap-2.5 border border-[#e2e1e1] '>
+              
+              <div className='w-[95%] h-[30%] border border-[#abaaaa] rounded-lg flex justify-center items-center gap-2 p-5 overflow-hidden'>
+
+                <div className='w-[70px] h-[90px] flex items-center justify-center shrink-0 rounded-lg md:w-[100px] md:h-[100px]  '>
+                  <img className='w-full h-full  rounded-lg' src={cardDetails.image1} alt="" />
+                </div>
+
+                <div className='w-[80%] h-[100px] gap-[5px]'>
+                    <h1 className='w-[90%] truncate'>
+                      { `IN ${cardDetails.landmark.toUpperCase()},${cardDetails.city.toUpperCase()}` }
+                    </h1>
+                    <h1> {cardDetails.title.toUpperCase()} </h1>
+                    <h1> {cardDetails.category.toUpperCase()} </h1>
+                    <h1 className='flex items-center justify-start gap-[5px]'>
+                      <IoStar className='text-[#eb6262]'/>{cardDetails.ratings}
+                    </h1>
+                </div>
+
+              </div>
+
+              <div className='w-[95%] h-[60%] border border-[#abaaaa] rounded-lg flex justify-start items-start p-5 gap-[15px] flex-col'>
+                
+              </div>
+
+            </div>
+
+          </div>
+       }
         
     
     </div>

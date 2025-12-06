@@ -91,7 +91,7 @@ const Navbar = () => {
                             userData == null ? 
                             <span><FaRegUserCircle className='w-[23px] h-[23px] cursor-pointer'/></span> 
                             : 
-                            <span className='h-[30px] w-[30px] bg-[#080808] text-[white] rounded-full flex items-center justify-center cursor-pointer'> {userData?.name.slice(0,1)} </span>
+                            <span className='h-[30px] w-[30px] bg-[#080808] text-[white] rounded-full flex items-center justify-center cursor-pointer'> {userData?.name.slice(0,1).toUpperCase()} </span>
                         }
 
                     </button>
