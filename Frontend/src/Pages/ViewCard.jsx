@@ -51,7 +51,7 @@ const ViewCard = () => {
     if(checkIn && checkOut){
       const InDate = new Date(checkIn);
       const OutDate = new Date(checkOut);
-      const n = (OutDate - InDate) / 24*60*60*1000 ; 
+      const n = (OutDate - InDate) / (24*60*60*1000) ; 
       setNight(n); 
 
       // Platform Charges (7%)
@@ -349,13 +349,52 @@ const ViewCard = () => {
               </div>
 
               <div className='w-[95%] h-[60%] border border-[#abaaaa] rounded-lg flex justify-start items-start p-5 gap-[15px] flex-col'>
+                <h1 className='text-[22px] font-semibold'>
+                  Booking Price -
+                </h1>
 
+                <p className='w-full flex justify-between items-center px-5'>
+                  <span className='font-semibold'>
+                    {`₹${cardDetails.rent} X ${night} nights`}
+                  </span>
+                  <span>
+                    {cardDetails.rent * night}
+                  </span>
+                </p>
+
+                <p className='w-full flex justify-between items-center px-5'>
+                  <span className='font-semibold'>
+                    Tax
+                  </span>
+                  <span>
+                    {cardDetails.rent * (8/100)}
+                  </span>
+                </p>
+
+                <p className='w-full flex justify-between items-center px-5 border-b border-gray-500 pb-2.5'>
+                  <span className='font-semibold'>
+                    Platform Charge 
+                  </span>
+                  <span>
+                    {cardDetails.rent * (7/100)}
+                  </span>
+                </p>
+
+                <p className='w-full flex justify-between items-center px-5'>
+                  <span className='font-semibold'>
+                    Total Price
+                  </span>
+                  <span>
+                    ₹{total}
+                  </span>
+                </p>
+                
               </div>
 
             </div>
 
           </div>
-       }
+      }
         
     
     </div>
