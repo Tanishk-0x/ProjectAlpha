@@ -66,7 +66,7 @@ const Navbar = () => {
 
     return (
         
-        <div className='fixed top-0 bg-[white]'>
+        <div className='fixed top-0 bg-[white] z-20'>
 
             <div className='w-screen min-h-20 border-b border-[#dcdcdc] px-5 flex items-center justify-between md:px-10'>
                 

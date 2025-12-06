@@ -46,6 +46,24 @@ const BookingContext = ({children}) => {
     }
 
 
+    // Cancel Booking 
+    const CancelBooking = async (id) => {
+        try {
+            const res = await axios.delete(serverUrl + `/booking/cancel${id}` , 
+                {withCredentials : true}
+            ); 
+            await getUserDetails(); 
+            await getListings(); 
+            toast.success(res.data.message); 
+            console.log(res.data); 
+        }
+        
+        catch (error) {
+            console.log(error); 
+            toast.error("Error While Cancel");   
+        }
+    }
+
     const value = {
         checkIn , setCheckIn ,
         checkOut , setCheckOut , 
@@ -53,6 +71,7 @@ const BookingContext = ({children}) => {
         night , setNight , 
         bookingData , setBookingData , 
         HandleBooking , 
+        CancelBooking
     };
 
 

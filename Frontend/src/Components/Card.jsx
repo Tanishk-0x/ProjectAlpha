@@ -3,6 +3,8 @@ import { userDataContext } from '../Context/UserContext'
 import { listingDataContext } from '../Context/ListingContext';
 import { useNavigate } from 'react-router-dom';
 import { IoStar } from "react-icons/io5";
+import { GiConfirmed } from "react-icons/gi";
+import { FcCancel } from "react-icons/fc";
 
 
 const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings, isBooked, host}) => {
@@ -23,8 +25,23 @@ const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings,
 
   return (
 
-    <div onClick={HandleClick} className='w-[330px] max-w-[85%] h-[460px] flex items-start justify-start flex-col rounded-lg curson-pointer no-scrollBar'>
+    <div onClick={() => {!isBooked ? HandleClick() : null}} className='w-[330px] max-w-[85%] h-[460px] flex items-start justify-start flex-col rounded-lg curson-pointer no-scrollBar relative z-10'>
       
+      {/* // Booked Or Not? PopUp */}
+      {
+        isBooked && 
+        <div className='text-[green] bg-[white] rounded-lg absolute flex items-center justify-center right-1 top-1 gap-[5px] p-[5px] '>
+          <GiConfirmed className='w-5 h-5'/> Booked
+        </div>
+      }
+
+      {
+        isBooked && host == userData?._id &&
+        <div className='text-[red] bg-[white] rounded-lg absolute flex items-center justify-center right-1 top-[50px] gap-[5px] p-[5px] '>
+          <FcCancel className='w-5 h-5'/> Cancel
+        </div>
+      }
+
       <div className='w-full h-[67%] bg-[#2e2d2d] rounded-lg overflow-auto flex'>
         <img src={image1} alt="" className='w-full shrink-0' /> 
         <img src={image2} alt="" className='w-full shrink-0' />
