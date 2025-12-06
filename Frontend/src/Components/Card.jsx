@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoStar } from "react-icons/io5";
 
 
-const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings}) => {
+const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings, isBooked, host}) => {
 
   const navigate = useNavigate(); 
 

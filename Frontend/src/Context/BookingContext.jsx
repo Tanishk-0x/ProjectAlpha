@@ -35,6 +35,7 @@ const BookingContext = ({children}) => {
             setBookingData(res.data.booking);
             toast.success(res.data.message);
             console.log(res.data); 
+            navigate('/');
         }
         
         catch (error) {

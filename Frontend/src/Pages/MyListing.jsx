@@ -34,6 +34,9 @@ const MyListing = () => {
                     image3={list.image3}
                     rent={list.rent}
                     id={list._id}
+                    isBooked={list.isBooked}
+                    host={list.host}
+                    ratings={list.ratings}
                 />
                )) 
             }

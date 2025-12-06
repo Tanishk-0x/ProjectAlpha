@@ -107,7 +107,7 @@ const Navbar = () => {
                             <div className='w-full h-px bg-[#c1c0c0]'></div>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => {navigate('/listingpage1') ; setShowPopUp(false)}}>List your home</li>
                             <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => {navigate('/mylisting') ; setShowPopUp(false)}}>My Listing</li>
-                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer'>Check Booking</li>
+                            <li className='w-full px-[15px] py-2.5 hover:bg-[#f4f3f3] cursor-pointer' onClick={() => {navigate('/mybooking') ; setShowPopUp(false)}}>My Booking</li>
                         </ul>
                     </div>
                     } 
