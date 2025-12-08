@@ -30,7 +30,7 @@ const App = () => {
         <Route path='/mylisting' element={ userData != null ? <MyListing/> : <Navigate to={'/'}/>}/>
         <Route path='/viewcard' element={userData != null ? <ViewCard/> : <Navigate to={'/'}/>}/>
         <Route path='/mybooking' element={userData != null ? <MyBooking/> : <Navigate to={'/'}/>}/>
-        <Route path='/booked' element={<Booked/>}/>
+        <Route path='/booked' element={userData != null ? <Booked/> : <Navigate to={'/'}/>}/>
       </Routes>
 
       <Toaster/>
