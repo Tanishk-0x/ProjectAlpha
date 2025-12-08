@@ -8,7 +8,7 @@ import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
 import {toast} from 'react-hot-toast'
 import { IoStar } from "react-icons/io5";
-import { bookingDataContext } from '../Context/bookingContext';
+import { bookingDataContext } from '../Context/BookingContext';
 
 const ViewCard = () => {
 

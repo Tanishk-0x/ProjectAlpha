@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { userDataContext } from '../Context/UserContext'
 import { listingDataContext } from '../Context/ListingContext';
 import { useNavigate } from 'react-router-dom';
 import { IoStar } from "react-icons/io5";
 import { GiConfirmed } from "react-icons/gi";
 import { FcCancel } from "react-icons/fc";
+import { bookingDataContext } from '../Context/BookingContext';
 
 
 const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings, isBooked, host}) => {
@@ -13,6 +14,9 @@ const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings,
 
   const {userData} = useContext(userDataContext);
   const {HandleViewCard} = useContext(listingDataContext);
+  const {CancelBooking} = useContext(bookingDataContext);
+
+  const [showCancelPopUp , setShowCancelPopUp] = useState(false); 
 
   const HandleClick = () => {
     if(userData){
@@ -37,8 +41,27 @@ const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings,
 
       {
         isBooked && host == userData?._id &&
-        <div className='text-[red] bg-[white] rounded-lg absolute flex items-center justify-center right-1 top-[50px] gap-[5px] p-[5px] '>
+        <div onClick={() => setShowCancelPopUp(true)} className='text-[red] bg-[white] rounded-lg absolute flex items-center justify-center right-1 top-[50px] gap-[5px] p-[5px] cursor-pointer'>
           <FcCancel className='w-5 h-5'/> Cancel
+        </div>
+      }
+
+      {/* // Cancel Booking PopUp */}
+      { showCancelPopUp && 
+        <div className='w-[300px] h-[100px] bg-[#ffffffdf] absolute top-[110px] left-[13px] rounded-lg'>
+          <div className='w-full h-[50%] text-[#2e2d2d] flex items-start justify-center rounded-lg overflow-auto text-[20px] p-2.5'>
+            Booking Cancel!
+          </div>
+          <div className='w-full h-[50%] text-[18px] font-semibold flex items-start justify-center gap-2.5 text-[#986b6b]'>
+            Are you sure?
+            <button onClick={() => { 
+              CancelBooking(id) 
+              setShowCancelPopUp(false); 
+            }} className='px-5 bg-[red] text-[white] rounded-lg hover:bg-slate-600 cursor-pointer'> Yes </button>
+            
+            <button onClick={() => setShowCancelPopUp(false)} 
+            className='px-5 bg-[red] text-[white] rounded-lg hover:bg-slate-600 cursor-pointer'> No </button>
+          </div>
         </div>
       }
 

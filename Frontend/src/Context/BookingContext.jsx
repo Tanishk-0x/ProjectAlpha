@@ -49,7 +49,7 @@ const BookingContext = ({children}) => {
     // Cancel Booking 
     const CancelBooking = async (id) => {
         try {
-            const res = await axios.delete(serverUrl + `/booking/cancel${id}` , 
+            const res = await axios.delete(serverUrl + `/booking/cancel/${id}` , 
                 {withCredentials : true}
             ); 
             await getUserDetails(); 
