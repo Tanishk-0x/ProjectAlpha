@@ -22,9 +22,11 @@ const BookingContext = ({children}) => {
     const [total , setTotal] = useState(0);
     const [night , setNight] = useState(0);
     const [bookingData , setBookingData] = useState([]); 
+    const [booking , setBooking] = useState(false); 
 
     // Handle Booking 
     const HandleBooking = async (id) => {
+        setBooking(true); 
         try {
             const res = await axios.post(serverUrl + `/booking/create/${id}` , 
                 {checkIn , checkOut , totalRent:total} ,
@@ -35,12 +37,14 @@ const BookingContext = ({children}) => {
             setBookingData(res.data.booking);
             toast.success(res.data.message);
             console.log(res.data); 
-            navigate('/');
+            setBooking(false); 
+            navigate('/booked');
         }
         
         catch (error) {
             console.log(error);  
             setBookingData(null);
+            setBooking(false); 
             toast.error("Error While Booking"); 
         }
     }
@@ -71,7 +75,8 @@ const BookingContext = ({children}) => {
         night , setNight , 
         bookingData , setBookingData , 
         HandleBooking , 
-        CancelBooking
+        CancelBooking , 
+        booking , setBooking
     };
 
 

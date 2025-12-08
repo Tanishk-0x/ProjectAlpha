@@ -36,7 +36,8 @@ const ViewCard = () => {
     checkOut , setCheckOut , 
     total , setTotal , 
     night , setNight , 
-    HandleBooking
+    HandleBooking , 
+    booking , 
   } = useContext(bookingDataContext) ; 
 
   // Handle Minimum Date To Choose 
@@ -291,7 +292,7 @@ const ViewCard = () => {
 
        { showBookingPopUp &&
 
-          <div className='w-full h-full flex items-center justify-center bg-[#000000a9] absolute top-0 z-100 p-5  backdrop-blur-sm md:flex-row md:gap-[100px]'>
+          <div className='w-full h-full flex items-center justify-center bg-[#000000a9] absolute top-0 z-100 p-5  backdrop-blur-sm md:flex-row md:gap-[100px] flex-col'>
 
             <div onClick={() => setShowBookingPopUp(false)} className='h-8 w-8 bg-[red] rounded-full flex justify-center items-center top-[6%] left-[25px] absolute text-[18px] font-bold'>
               <RxCross2/>
@@ -320,8 +321,8 @@ const ViewCard = () => {
                 </div>
 
                 <div className='w-full flex items-center justify-center'>
-                  <button onClick={() => HandleBooking(cardDetails._id)} className='px-20 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer text-nowrap mt-[30px]' >
-                    Book Now
+                  <button disabled={booking} onClick={() => HandleBooking(cardDetails._id)} className='px-20 py-2.5 bg-[red] text-[white] text-[15px] md:px-[100px] rounded-lg cursor-pointer text-nowrap mt-[30px]' >
+                    { booking ? 'Booking..' : 'Book Now' }
                   </button>
                 </div>
 

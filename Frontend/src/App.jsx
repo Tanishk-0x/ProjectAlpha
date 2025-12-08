@@ -12,6 +12,7 @@ import { Navigate } from 'react-router-dom'
 import MyListing from './Pages/MyListing'
 import ViewCard from './Pages/ViewCard'
 import MyBooking from './Pages/MyBooking'
+import Booked from './Pages/Booked'
 
 const App = () => {
 
@@ -28,7 +29,8 @@ const App = () => {
         <Route path='/listingpage3' element={ userData != null ? <ListingPage3/> : <Navigate to={'/'}/>}/>
         <Route path='/mylisting' element={ userData != null ? <MyListing/> : <Navigate to={'/'}/>}/>
         <Route path='/viewcard' element={userData != null ? <ViewCard/> : <Navigate to={'/'}/>}/>
-        <Route path='/mybooking' element={<MyBooking/>}/>
+        <Route path='/mybooking' element={userData != null ? <MyBooking/> : <Navigate to={'/'}/>}/>
+        <Route path='/booked' element={<Booked/>}/>
       </Routes>
 
       <Toaster/>

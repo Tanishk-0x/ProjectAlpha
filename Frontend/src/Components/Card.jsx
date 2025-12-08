@@ -14,7 +14,7 @@ const Card = ({title, landmark, city, image1, image2, image3, rent, id, ratings,
 
   const {userData} = useContext(userDataContext);
   const {HandleViewCard} = useContext(listingDataContext);
-  const {CancelBooking} = useContext(bookingDataContext);
+  const {CancelBooking } = useContext(bookingDataContext);
 
   const [showCancelPopUp , setShowCancelPopUp] = useState(false); 
 
