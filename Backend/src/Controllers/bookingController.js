@@ -49,6 +49,8 @@ const createBooking = async (req , res) => {
             $push:{booking:listing._id} ,
         } , {new:true});
 
+        await booking.populate("host" , "email"); 
+
         if(!user){
             res.status(404).json({
                 success : false , 

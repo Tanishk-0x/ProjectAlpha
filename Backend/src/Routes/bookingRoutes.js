@@ -4,6 +4,6 @@ const isAuth = require('../Middlewares/authMiddleware');
 const router = express.Router(); 
 
 router.post('/create/:id' , isAuth , createBooking); 
-router.post('/cancel/:id' , isAuth , cancelBooking);
+router.delete('/cancel/:id' , isAuth , cancelBooking);
 
 module.exports = router ; 

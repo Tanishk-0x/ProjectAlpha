@@ -170,4 +170,36 @@ const deleteListing = async (req , res) => {
     }
 }
 
-module.exports = {addListing , getListing , findListing , updateListing , deleteListing} ; 
+const rateListing = async (req , res) => {
+    try {
+       const {id}= req.params ; 
+       const {ratings} = req.body ; 
+       const listing = await Listing.findById(id); 
+       
+       if(!listing){
+            res.status(404).json({
+                success : false , 
+                message : "Listing Not Found"
+            }); 
+       }
+
+        // Update Listing 
+       listing.ratings = Number(ratings);
+       await listing.save();  
+
+       res.status(200).json({
+            success : true , 
+            message : "Thanks For Your FeedBack" , 
+            ratings : listing.ratings  
+       }); 
+    }
+    
+    catch (error) {
+        res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Rating Listing ${error}`
+        })    
+    }
+}
+
+module.exports = {addListing , getListing , findListing , updateListing , deleteListing , rateListing} ; 
