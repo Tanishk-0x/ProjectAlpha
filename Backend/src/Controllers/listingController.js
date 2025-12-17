@@ -202,4 +202,38 @@ const rateListing = async (req , res) => {
     }
 }
 
-module.exports = {addListing , getListing , findListing , updateListing , deleteListing , rateListing} ; 
+const searchListing = async (req , res) => {
+    try {
+        const { query } = req.query ; 
+
+        if(!query){
+            res.status(400).json({
+                success : false , 
+                message : "Search Query Is Required"
+            }); 
+        }
+
+        const listing = await Listing.find({
+            $or : [
+                { landmark : { $regex : query , $options : "i"}} , 
+                { city : { $regex : query , $options : "i"}} , 
+                { title : { $regex : query , $options : "i"}} , 
+            ]
+        }); 
+
+        res.status(200).json({
+            success : true , 
+            message : "Listing Fetched" , 
+            listing : listing
+        }); 
+    }
+    
+    catch (error) {
+        res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Search Listing ${error}`
+        })     
+    }
+}
+
+module.exports = {addListing , getListing , findListing , updateListing , deleteListing , rateListing , searchListing} ; 
