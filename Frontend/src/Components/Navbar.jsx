@@ -1,4 +1,4 @@
-import React, { useState , useContext } from 'react'
+import React, { useState , useContext, useEffect } from 'react'
 import logo from '/Airbnb-Logo.png'
 import { FiSearch } from "react-icons/fi";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -25,15 +25,22 @@ const Navbar = () => {
     const {serverUrl} = useContext(authDataContext); 
     const {userData , setUserData} = useContext(userDataContext);
     
+    
     const {
         listingData , setListingData , 
-        newListingData , setNewListingData 
+        newListingData , setNewListingData , 
+        searchData , setSearchData ,
+        HandleSearch ,  
+        HandleViewCard
     } = useContext(listingDataContext); 
 
     const [cate , setCate] = useState(''); 
 
     const [showPopUp , setShowPopUp] = useState(false) ; 
     const [loading , setLoading] = useState(false) ; 
+
+    // Search 
+    const [searchInput , setSearchInput] = useState(''); 
 
     const LogoutHandler = async () => {
         try {
@@ -64,18 +71,34 @@ const Navbar = () => {
     }
 
 
+    // Search 
+    useEffect(() => {
+        HandleSearch(searchInput); 
+    },[ searchInput ]);
+
+    // To open the card based on search 
+      const HandleClick = (id) => {
+        if(userData){
+        HandleViewCard(id);
+        }
+        else{
+        navigate('/login');
+        }
+    }
+
     return (
         
         <div className='fixed top-0 bg-[white] z-20'>
 
             <div className='w-screen min-h-20 border-b border-[#dcdcdc] px-5 flex items-center justify-between md:px-10'>
                 
-                <div>
+                <div onClick={() => { console.log("---->" , searchInput)}}>
                     <img src={logo} className='w-[130px] '/>
                 </div>
 
                 <div className='w-[35%] relative hidden md:block '>
-                    <input type="text" placeholder='Any Where  |  Any Location  |  Any City' 
+                    <input onChange={(e) => setSearchInput(e.target.value)} value={searchInput}
+                     type="text" placeholder='Any Where  |  Any Location  |  Any City' 
                     className='w-full px-[30px] py-2.5 border-2 border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px]' />
                     <button className='absolute p-2.5 rounded-[50px] bg-[red] right-[2%] top-[5px]'> <FiSearch className='w-5 h-5 text-[white]' /> </button>
                 </div>
@@ -114,11 +137,28 @@ const Navbar = () => {
 
                 </div>
 
+                {/* // Search Section  */}
+                { searchData?.length > 0 && 
+                    <div className='w-screen h-[450px] flex flex-col gap-5 absolute top-[50%] overflow-auto left-0 justify-start items-center'>
+                        <div className='max-w-[700px] w-screen h-[300px] overflow-hidden flex flex-col bg-[#fefdfd] p-5 rounded-lg border border-[#a2a1a1] cursor-pointer'>
+                            {
+                                searchData.map((search) => (
+                                    <div onClick={() => HandleClick(search._id)} 
+                                     className='border-b border-[black] p-2.5'>
+                                        {search.title} in {search.landmark}, {search.city}
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                }
+
             </div>
             
             <div className='w-full flex items-center justify-center mt-2 md:hidden'>
                 <div className='w-[80%] relative'>
-                    <input type="text" placeholder='Any Where  |  Any Location  |  Any City' 
+                    <input onChange={(e) => {setSearchInput(e.target.value)}} value={searchInput}
+                     type="text" placeholder='Any Where  |  Any Location  |  Any City' 
                         className='w-full px-[30px] py-2.5 border-2 border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px]' />
                     <button className='absolute p-2.5 rounded-[50px] bg-[red] right-[2%] top-[5px]'> <FiSearch className='w-5 h-5 text-[white]' /> </button>
                 </div>

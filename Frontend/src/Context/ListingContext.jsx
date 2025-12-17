@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import {authDataContext} from '../Context/AuthContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'; 
-import {useNavigate} from 'react-router-dom'; 
+import {data, useNavigate} from 'react-router-dom'; 
 
 // Creating Context
 export const listingDataContext = createContext() ; 
@@ -31,6 +31,9 @@ const ListingContext = ({children}) => {
     const [listingData , setListingData] = useState([]); 
     const [newListingData , setNewListingData] = useState([]);
     const [cardDetails , setCardDetails] = useState(null); 
+
+    // Search 
+    const [searchData , setSearchData] = useState([]); 
 
     const [adding , setAdding] = useState(false); 
     const[loading , setLoading] = useState(false);
@@ -91,7 +94,8 @@ const ListingContext = ({children}) => {
             );     
             setListingData(res.data.listing);
             setNewListingData(res.data.listing); 
-            setLoading(false);  
+            setLoading(false); 
+            console.log(res.data);  
         }
 
         catch (error) {
@@ -113,6 +117,21 @@ const ListingContext = ({children}) => {
         
         catch (error) {
             console.log(error);     
+        }
+    }
+
+    // Handle Search 
+    const HandleSearch = async (data) => {
+        try {
+            const res = await axios.get(serverUrl + 
+                `/listing/search?query=${data}`
+            ); 
+            setSearchData(res.data.listing);  
+        }
+        
+        catch (error) {
+            console.log(error);     
+            setSearchData(null); 
         }
     }
 
@@ -141,10 +160,13 @@ const ListingContext = ({children}) => {
         listingData , setListingData ,
         newListingData , setNewListingData ,
         cardDetails , setCardDetails ,
+        searchData , setSearchData ,
 
         getListings , 
         HandleAddListing , 
         HandleViewCard ,
+        HandleSearch , 
+         
     }; 
 
     return (
