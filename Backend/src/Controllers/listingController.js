@@ -27,13 +27,13 @@ const addListing = async (req , res) => {
         const user = await User.findByIdAndUpdate(host , {$push:{listing:listing._id}} , {new:true}); 
 
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
                 success : false , 
                 message : "User Not Found"
             }); 
         }
 
-        res.status(201).json({
+        return res.status(201).json({
             success : true , 
             message : "Listing Created SuccessFully" , 
             listing : listing
@@ -41,7 +41,7 @@ const addListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Creating Listing ${error}`
         });
@@ -52,7 +52,7 @@ const addListing = async (req , res) => {
 const getListing = async (req , res) => {
     try {
         const listing = await Listing.find().sort({createdAt:-1}); 
-        res.status(200).json({
+        return res.status(200).json({
             success : true , 
             message : "Listings Fetched SuccessFully" , 
             listing : listing ,
@@ -60,7 +60,7 @@ const getListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Fetching Listings ${error}`
         })    
@@ -73,13 +73,13 @@ const findListing = async (req , res) => {
         const listing = await Listing.findById(id); 
 
         if(!listing){
-            res.status(404).json({
+            return res.status(404).json({
                 success : false , 
                 message : "Listing Not Found"
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success : true , 
             message : "Listing Found SuccessFully" , 
             listing : listing
@@ -87,7 +87,7 @@ const findListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Finding Listings ${error}`
         })
@@ -125,7 +125,7 @@ const updateListing = async (req , res) => {
         }, { new:true }); 
 
 
-        res.status(201).json({
+        return res.status(201).json({
             success : true , 
             message : "Listing Updated SuccessFully" , 
             listing : listing
@@ -134,7 +134,7 @@ const updateListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Updating Listings ${error}`
         }); 
@@ -150,20 +150,20 @@ const deleteListing = async (req , res) => {
         },{new:true});
         
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
                 success : false , 
                 message : 'User Not Found'
             });
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             success : true , 
             message : 'Listing Deleted SuccessFully'
         }); 
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Deleting Listing ${error}`
         }); 
@@ -177,7 +177,7 @@ const rateListing = async (req , res) => {
        const listing = await Listing.findById(id); 
        
        if(!listing){
-            res.status(404).json({
+            return res.status(404).json({
                 success : false , 
                 message : "Listing Not Found"
             }); 
@@ -187,7 +187,7 @@ const rateListing = async (req , res) => {
        listing.ratings = Number(ratings);
        await listing.save();  
 
-       res.status(200).json({
+       return res.status(200).json({
             success : true , 
             message : "Thanks For Your FeedBack" , 
             ratings : listing.ratings  
@@ -195,7 +195,7 @@ const rateListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Rating Listing ${error}`
         })    
@@ -207,7 +207,7 @@ const searchListing = async (req , res) => {
         const { query } = req.query ; 
 
         if(!query){
-            res.status(400).json({
+            return res.status(400).json({
                 success : false , 
                 message : "Search Query Is Required"
             }); 
@@ -221,7 +221,7 @@ const searchListing = async (req , res) => {
             ]
         }); 
 
-        res.status(200).json({
+        return res.status(200).json({
             success : true , 
             message : "Listing Fetched" , 
             listing : listing
@@ -229,7 +229,7 @@ const searchListing = async (req , res) => {
     }
     
     catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false , 
             message : `An Error Occured While Search Listing ${error}`
         })     
