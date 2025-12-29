@@ -25,4 +25,5 @@ router.post('/ratings/:id' , isAuth , rateListing);
 
 router.get('/search' , searchListing); 
 
+
 module.exports = router ; 

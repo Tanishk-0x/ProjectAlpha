@@ -20,9 +20,10 @@ const GenerateByGroq = async ( ques ) => {
                             
                             ### ALLOWED SCHEMA (Output this JSON only)
                             {
-                                "location": String | null,       // e.g. "Mumbai", "Goa"
+                                "landmark": String | null,
+                                "city" : String | null        // e.g. "Mumbai", "Goa"
                                 "maxPrice": Number | null,       // Extract numeric value. If user says "2k", output 2000.
-                                "propertyType": String | null,   // Map to one of: ["Apartment", "Villa", "Studio", "Shared"]
+                                "category": String | null,   // Map to one of: ["Apartment", "Villa", "Studio", "Shared"]
                                 "bedrooms": Number | null,       // Minimum number requested
                                 "amenities": String[]            // Extract Like: ["WiFi", "Pool", "AC", "Kitchen", "Parking", "Pet Friendly"]
                             }

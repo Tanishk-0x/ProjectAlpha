@@ -5,7 +5,7 @@ const User = require('../Models/userModel');
 const addListing = async (req , res) => {
     try {
         const host = req.userId ; 
-        const {title , description , rent , city , landmark , category} = req.body ;
+        const {title , description , rent , city , landmark , category , amenities} = req.body ;
         
         const image1 = await uploadOnCloudinary(req.files.image1[0].path); 
         const image2 = await uploadOnCloudinary(req.files.image2[0].path); 
@@ -21,7 +21,8 @@ const addListing = async (req , res) => {
             category , 
             image1 , 
             image2 ,
-            image3
+            image3 , 
+            amenities 
         }); 
 
         const user = await User.findByIdAndUpdate(host , {$push:{listing:listing._id}} , {new:true}); 

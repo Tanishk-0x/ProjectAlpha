@@ -58,6 +58,11 @@ const listingSchema = new mongoose.Schema({
         default : 0
     },
 
+    amenities : {
+        type : [String] , 
+        default : [] 
+    },
+
     isBooked : {
         type : Boolean , 
         default : false 
