@@ -20,7 +20,9 @@ const ListingPage1 = () => {
       setBackEndImage1 , 
       setBackEndImage2 , 
       setBackEndImage3 ,
+      amenities , setAmenities ,
     } = useContext(listingDataContext); 
+    
 
     // Image Set Functions 
     const HandleImage1 = (e) => {
@@ -47,6 +49,13 @@ const ListingPage1 = () => {
       navigate('/listingpage2')
     }
 
+    // Amenities Handler 
+    const HandleAmenitiesChange = (e) => {
+      const value = e.target.value ; 
+
+      const amenitiesArray = value.split(/[ ,]+/).filter(item => item.trim() !== " ") ; 
+      setAmenities(amenitiesArray); 
+    }
 
     return (
       
@@ -107,6 +116,13 @@ const ListingPage1 = () => {
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
                 <label htmlFor="landmark" className='text-[20px]'>Landmark</label>
                 <input type="text" onChange={(e) => setLandmark(e.target.value)} value={landmark} placeholder='landmark' id='landmark' required className='w-[90%] h-10 border-2 border-[#555656] rounded-lg text-[18px] px-4' />
+              </div>
+
+              {/* // --------- Amenities ---------- */}
+              <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
+                <label htmlFor="amenities" className='text-[20px]'>Amenities</label>
+                <input type="text" onChange={(e) => HandleAmenitiesChange(e)} 
+                placeholder='amenities : press space to make seprated' id='amenities' value={amenities} required className='w-[90%] h-10 border-2 border-[#555656] rounded-lg text-[18px] px-4' />
               </div>
 
              

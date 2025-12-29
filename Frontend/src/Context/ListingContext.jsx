@@ -26,7 +26,9 @@ const ListingContext = ({children}) => {
 
     const [backEndImage1 , setBackEndImage1] = useState(null);
     const [backEndImage2 , setBackEndImage2] = useState(null); 
-    const [backEndImage3 , setBackEndImage3] = useState(null);  
+    const [backEndImage3 , setBackEndImage3] = useState(null);
+    
+    const [amenities , setAmenities] = useState([]); 
 
     const [listingData , setListingData] = useState([]); 
     const [newListingData , setNewListingData] = useState([]);
@@ -56,6 +58,10 @@ const ListingContext = ({children}) => {
             formData.append("image2" , backEndImage2);
             formData.append("image3" , backEndImage3);
 
+            amenities.forEach((item) => {
+                formData.append("amenities[]" , item);
+            });
+
             // Calling
             const res = await axios.post(serverUrl + "/listing/add" , 
                 formData , {withCredentials : true}
@@ -74,6 +80,7 @@ const ListingContext = ({children}) => {
             setCity(""); 
             setLandmark(""); 
             setCategory("");  
+            setAmenities(""); 
 
             toast.success(res.data.message); 
             navigate('/'); 
@@ -151,7 +158,9 @@ const ListingContext = ({children}) => {
         frontEndImage3,setFrontEndImage3 , 
         backEndImage1,setBackEndImage1 , 
         backEndImage2,setBackEndImage2 , 
-        backEndImage3,setBackEndImage3 , 
+        backEndImage3,setBackEndImage3 ,
+        amenities , setAmenities ,
+        
         loading , setLoading ,
         adding ,
         updating , setUpdating , 

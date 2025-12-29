@@ -1,17 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Navbar from '../Components/Navbar'
 import Card from '../Components/Card'
 import { listingDataContext } from '../Context/ListingContext'
 
+
+
 const Home = () => {
 
-  const {listingData , setListingData , newListingData} = useContext(listingDataContext); 
+  const {listingData , setListingData , newListingData} = useContext(listingDataContext);
+  
 
   return (
     <div>
       <Navbar/>
 
-      <div className='w-screen h-[77vh] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[180px]'>
+      <div className='w-screen h-[77vh] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[180px] relative'>
         {
           newListingData.map((list) => (
             <Card 
