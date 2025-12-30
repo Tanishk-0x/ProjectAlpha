@@ -23,9 +23,9 @@ const GenerateByGroq = async ( ques ) => {
                                 "landmark": String | null,
                                 "city" : String | null        // e.g. "Mumbai", "Goa"
                                 "maxPrice": Number | null,       // Extract numeric value. If user says "2k", output 2000.
-                                "category": String | null,   // Map to one of: ["Apartment", "Villa", "Studio", "Shared"]
+                                "category": String | null,   // Map to one of: ["rooms", "villa", "farm house", "pool house" , "shops"]
                                 "bedrooms": Number | null,       // Minimum number requested
-                                "amenities": String[]            // Extract Like: ["WiFi", "Pool", "AC", "Kitchen", "Parking", "Pet Friendly"]
+                                "amenities": String[]            // Extract Like: ["WiFi", "Pool", "AC", "Kitchen", "Parking", "Pet Friendly" , "HygenicFood" , etc identify by yourself]
                             }
 
                             RULES & CONSTRAINTS

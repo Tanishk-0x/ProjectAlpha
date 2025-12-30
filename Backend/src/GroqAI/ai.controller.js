@@ -1,24 +1,16 @@
 const GenerateByGroq = require('./ai.service'); 
 
-const GenerateContent = async (req , res) => {
+const GenerateContent = async ( searchquery ) => {
     try {
-        const ques = req.body.ques ; 
-        if(!ques){
-            return res.status(403).json({
-                success : false , 
-                message : 'Input required!'
-            });
-        }
-        const response = await GenerateByGroq( ques ) ; 
+        const response = await GenerateByGroq( searchquery ) ; 
 
-        return response ;
+        const result = JSON.parse(response); 
+        return result ; 
     }
     
     catch (error) {
-        return res.status(500).json({
-            success : false , 
-            message : `An Error Occured While Generate Content : ${error}`
-        });
+        console.log(`Error : ${error}`)
+        return error ;
     }
 }
 
