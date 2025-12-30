@@ -2,13 +2,35 @@ import React, { useContext, useState } from 'react'
 import Navbar from '../Components/Navbar'
 import Card from '../Components/Card'
 import { listingDataContext } from '../Context/ListingContext'
-
+import { RxCross2 } from "react-icons/rx";
+import { GrSearchAdvanced } from "react-icons/gr";
+import { TbMessage2Search } from "react-icons/tb";
+import toast from 'react-hot-toast';
+import {SearchDataContext} from '../Context/NaturalSearchContext';
 
 
 const Home = () => {
 
   const {listingData , setListingData , newListingData} = useContext(listingDataContext);
   
+  // PopUp 
+  const [showPopUp , setShowPopUp] = useState(false); 
+  const [searchQuery , setSearchQuery] = useState(''); 
+
+  const {
+      HandleNaturalSearch ,
+      searchListing 
+  } = useContext(SearchDataContext); 
+
+  const { HandleViewCard } = useContext(listingDataContext); 
+
+  const HandleKeyDown = (e) => {
+    if(e.key == "Enter"){
+      e.preventDefault(); 
+      toast.success(searchQuery);
+      HandleNaturalSearch(searchQuery); 
+    }
+  }
 
   return (
     <div>
@@ -33,6 +55,95 @@ const Home = () => {
           ))
         }
       </div>
+
+      {/* ------ Natural Search Button ------ */}
+      <div className='z-100 fixed bottom-4 right-4 flex items-center justify-center'>
+        <button onClick={() => setShowPopUp(true)} className='rounded-full px-3 py-3 bg-[red] text-2xl text-white cursor-pointer hover:border'>
+          <TbMessage2Search/>
+        </button>
+      </div>
+
+      {/* ----- Natural Search PopUp ----- */}
+      { 
+        showPopUp && 
+        <div className='fixed flex justify-between items-center flex-col bg-[#FAF9F6] min-h-[400px] max-h-[500px] w-[90%] md:w-[500px] bottom-4 right-4 z-100 rounded-lg border-2 border-[black]'>
+          
+          <div className='flex justify-between w-full p-2 items-center border-b h-[10%]'>
+            <p className='font-semibold text-gray-700'>
+              Natural Search
+            </p>
+            <button onClick={() => setShowPopUp(false)} className='bg-[red] px-1 py-1 rounded-full cursor-pointer hover:border text-[18px]'>
+              <RxCross2 />
+            </button>
+          </div>
+
+          {/* // ------ Listing Result ------ */}
+          <div className='w-full h-full flex items-center justify-center flex-wrap overflow-y-auto gap-2 mt-2 mb-2'>
+            
+            {
+              searchListing && searchListing.length > 0 ? 
+              (
+                searchListing.map((item) => (
+                  <div key={item._id} onClick={() => HandleViewCard(item._id)} className='flex flex-row  w-[95%] h-[110px] rounded-lg border-2 border-gray-700 cursor-pointer hover:border'>
+
+                    <div className='w-[35%] h-full flex justify-center items-center'>
+                      <img src={item.image1} alt={item.title} className='w-full h-full object-cover'/>
+                    </div>
+
+                    <div className='w-[65%] p-2 flex flex-col justify-between'>
+                      <div>
+                        <div className='flex justify-between items-start'>
+                          <h4 className='font-bold text-sm truncate w-[70%]'> {item.title} </h4>
+                          <p className='font-bold text-red-500 text-xs'>₹{item.rent}/day</p>
+                        </div>
+                        <p className='text-[11px] line-clamp-2 text-gray-500'> {item.description} </p>
+                      </div>
+
+                      <div className='flex items-center flex-wrap gap-1'>
+                        {
+                          item.amenities.map((itr , index) => (
+                            <div key={index} className='p-1 text-xs bg-gray-300 text-gray-600 rounded'>
+                              {itr}
+                            </div>
+                          ))
+                        }
+                      </div>
+
+                      <div className='flex items-center justify-between text-[10px] text-gray-400'>
+                        <p className='truncate'> {item.landmark}, {item.city} </p>
+                        <span className='bg-green-100 text-green-700 px-1 rounded'> {item.category} </span>
+                      </div>
+                    </div>
+
+                  </div>
+                ))
+              )
+              : 
+              (
+                <div className='h-full text-gray-400 flex items-center justify-center flex-col'>
+                  <TbMessage2Search size={40}/>
+                  <p className='mt-2'>
+                    No matching found. try searching something else! 
+                  </p>
+                </div>
+              )
+            }
+            
+          </div>
+
+          <div className='w-full h-[65px] flex items-center justify-center border-t'>
+            <input className='bg-[white] relative w-[98%] h-[45px] px-3 border border-[gray] outline-none rounded-2xl'
+            type="text" placeholder='Search Here ..'
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => HandleKeyDown(e)}
+            />
+            <button className='absolute right-3 bg-[red] px-3 py-3 rounded-full'>
+              <GrSearchAdvanced />
+            </button>
+          </div>
+
+        </div>
+      }
 
     </div>
   )
