@@ -22,6 +22,31 @@ const ListingPage1 = () => {
       setBackEndImage3 ,
       amenities , setAmenities ,
     } = useContext(listingDataContext); 
+
+    // Amenities Data 
+    const AmenitiesData = [
+      { name: "WiFi" },
+      { name: "AC" },
+      { name: "Geyser" },
+      { name: "PowerBackup" },
+      { name: "RO Water" },
+      { name: "Parking" },
+      { name: "CCTV" },
+      { name: "Lift" },
+      { name: "Induction" },
+      { name: "Microwave" },
+      { name: "Washing Machine" },
+      { name: "Iron" },
+      { name: "FirstAidKit" },
+      { name: "EvCharger" },
+      { name: "Balcony" },
+      { name: "Electric Kettle" },
+      { name: "Dedicated Workspace" },
+      { name: "Fridge" },
+      { name: "Full-Length Mirror" },
+      { name: "Wardrobe" },
+      { name: "Kitchen Utensils" },
+    ];
     
 
     // Image Set Functions 
@@ -57,6 +82,18 @@ const ListingPage1 = () => {
       setAmenities(amenitiesArray); 
     }
 
+    // Toggle Amenities 
+    const HandleAmenitiesToggle = (val) => {
+      // amenities already includes then remove it
+      if(amenities.includes(val)){
+        setAmenities(amenities.filter(item => item !== val)); 
+      }
+      // if amenities not includes then add it 
+      else {
+        setAmenities([...amenities , val]);
+      } 
+    }
+
     return (
       
       <div className='w-full h-screen bg-white flex items-center justify-center relative overflow-auto'>
@@ -68,7 +105,7 @@ const ListingPage1 = () => {
                 <button className='cursor-pointer' onClick={() => navigate('/')}><FaArrowLeftLong /></button>
               </div>
 
-              <div className='w-[200px] h-[50px] text-[20px] bg-[#f14242] text-white flex items-center justify-center rounded-[30px] absolute top-[5%] right-2.5 shadow-lg cursor-pointer'>
+              <div onClick={() => { console.log(amenities)}} className='w-[200px] h-[50px] text-[20px] bg-[#f14242] text-white flex items-center justify-center rounded-[30px] absolute top-[5%] right-2.5 shadow-lg cursor-pointer'>
                   SetUp Your Home
               </div>
 
@@ -121,11 +158,26 @@ const ListingPage1 = () => {
               {/* // --------- Amenities ---------- */}
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
                 <label htmlFor="amenities" className='text-[20px]'>Amenities</label>
+
+                {/* // ------ Toggle Amenities ---- */}
+                <div className='w-[90%] min-h-[120px] max-h-[150px] flex flex-wrap gap-2 overflow-y-auto'>
+                  {
+                    AmenitiesData.map((item) => (
+                      <div key={item.name}
+                        onClick={() => HandleAmenitiesToggle(item.name)}
+                        className={`h-10 px-2 rounded-lg bg-gray-400 text-gray-800 cursor-pointer flex items-center justify-center ${(amenities.includes(item.name)) ? 'border-2 border-gray-800' : ''}`}
+                      >
+                        { item.name }
+                      </div>
+                    ))
+                  }
+                </div>
+
                 <input type="text" onChange={(e) => HandleAmenitiesChange(e)} 
                 placeholder='amenities : press space to make seprated' id='amenities' value={amenities} required className='w-[90%] h-10 border-2 border-[#555656] rounded-lg text-[18px] px-4' />
-              </div>
+              </div> 
 
-             
+       
               <button className='py-2.5 bg-[red] text-[white] text-[18px] md: px-[100px] rounded-lg cursor-pointer mt-2' > Next </button>
 
           </form>
