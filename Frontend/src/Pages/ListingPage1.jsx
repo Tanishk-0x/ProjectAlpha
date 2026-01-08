@@ -1,11 +1,17 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { listingDataContext } from '../Context/ListingContext';
+import { IoMdColorWand } from "react-icons/io";
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { authDataContext } from '../Context/AuthContext';
 
 const ListingPage1 = () => {
 
     const navigate = useNavigate(); 
+
+    const {serverUrl} = useContext(authDataContext); 
 
     // Destructuring the values
     const {
@@ -94,6 +100,40 @@ const ListingPage1 = () => {
       } 
     }
 
+    const [descriptions , setDescriptions] = useState({}); 
+    const [generating , setGenerating] = useState(false); 
+    const [showPopUp , setShowPopUp] = useState(false); 
+
+    // Generate Description 
+    const GenerateDescription = async () => {
+      try {
+
+        if(!title || !rent || !city || !landmark || !amenities.length > 0 ){
+          toast.error("Fill Out The Details"); 
+          return ; 
+        }
+
+        setGenerating(true); 
+        const data = title + "," + description + "," + rent + "," + city + "," + landmark + "," + amenities ; 
+        const res = await axios.post(serverUrl + '/listing/generatedesc' , 
+          { searchquery : data , flag : '1' } , {withCredentials : true} 
+        ); 
+
+        console.log("DATA IS ---> " , data); 
+        console.log("DESCRIPTIONS IS ---> " , res); 
+        setDescriptions(res.data.desc); 
+        toast.success("Description Generated"); 
+        setShowPopUp(true); 
+        setGenerating(false); 
+      }
+      
+      catch (error) {
+        console.log(`Error In Generating Description : ${error}`); 
+        toast.error("Error While Generating Description");
+        setGenerating(false); 
+      }
+    }
+
     return (
       
       <div className='w-full h-screen bg-white flex items-center justify-center relative overflow-auto'>
@@ -105,7 +145,7 @@ const ListingPage1 = () => {
                 <button className='cursor-pointer' onClick={() => navigate('/')}><FaArrowLeftLong /></button>
               </div>
 
-              <div onClick={() => { console.log(amenities)}} className='w-[200px] h-[50px] text-[20px] bg-[#f14242] text-white flex items-center justify-center rounded-[30px] absolute top-[5%] right-2.5 shadow-lg cursor-pointer'>
+              <div onClick={() => { console.log(descriptions)}} className='w-[200px] h-[50px] text-[20px] bg-[#f14242] text-white flex items-center justify-center rounded-[30px] absolute top-[5%] right-2.5 shadow-lg cursor-pointer'>
                   SetUp Your Home
               </div>
 
@@ -115,7 +155,33 @@ const ListingPage1 = () => {
               </div>
 
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
-                <label htmlFor="description" className='text-[20px]'>Description</label>
+                <div className='w-[90%] flex items-center justify-between'>
+                  <label htmlFor="description" className='text-[20px]'>Description</label>
+                  <button onClick={(e) => { 
+                    e.preventDefault() ; 
+                    GenerateDescription() ; 
+                  }}
+                    className='bg-purple-200 px-2 py-1 rounded-lg border-2 border-purple-700 flex flex-row items-center justify-center cursor-pointer gap-1'
+                  >
+                    { generating ? 'generating..' : <p className='flex flex-row items-center justify-center gap-1'>Generate with Ai <span><IoMdColorWand/></span></p> }
+                  </button>
+                </div>
+
+                {
+                  showPopUp && 
+                  <div className='w-[90%] flex items-center justify-center flex-col gap-2'>
+                    <div onClick={() => setDescription(descriptions.desc1)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                      { descriptions.desc1 }
+                    </div>
+                    <div onClick={() => setDescription(descriptions.desc2)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                      { descriptions.desc2 }
+                    </div>
+                    <div onClick={() => setDescription(descriptions.desc3)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                      { descriptions.desc3 }
+                    </div>
+                  </div>
+                }
+                
                 <textarea placeholder='description' onChange={(e) => setDescription(e.target.value)} value={description} id='description' required className='w-[90%] h-20 border-2 border-[#555656] rounded-lg text-[18px] px-4 pt-1' />
               </div>
 
