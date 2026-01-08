@@ -25,7 +25,13 @@ const GenerateByGroq = async ( ques ) => {
                                 "maxPrice": Number | null,       // Extract numeric value. If user says "2k", output 2000.
                                 "category": String | null,   // Map to one of: ["rooms", "villa", "farm house", "pool house" , "shops"]
                                 "bedrooms": Number | null,       // Minimum number requested
-                                "amenities": String[]            // Extract Like: ["WiFi", "Pool", "AC", "Kitchen", "Parking", "Pet Friendly" , "HygenicFood" , etc identify by yourself]
+                                "amenities": String[]            
+                                // Extract amenities Like: ["WiFi" , "AC" , "Geyser" , "PowerBackup" ,
+                                    "RO Water" , "Parking" , "CCTV" , "Lift" , "Induction" , "Microwave" ,
+                                    "Washing Machine" , "Iron" , "FirstAidKit" , "EvCharger" , "Balcony" ,
+                                    "Electric Kettle" , "Dedicated Workspace" , "Fridge" , "Full-Length Mirror" , 
+                                    "Wardrobe" , "Kitchen Utensils"
+                                ]
                             }
 
                             RULES & CONSTRAINTS
@@ -34,8 +40,13 @@ const GenerateByGroq = async ( ques ) => {
                                 - If the user says "luxury", set "minPrice" to 10000.
                                 - Convert "couple friendly" to "amenities": ["Privacy"] or ignore if not in list.
                             3. Synonym Mapping:
-                                - Map "gym" or "workout" -> "Gym" (if in amenities list, otherwise ignore).
-                                - Map "internet" -> "WiFi".
+                                - Map any mention of "internet" or "connection" to "WiFi".
+                                - Map "hot water" or "shower heater" to "Geyser".
+                                - Map "workspace", "desk", or "work from home" to "Dedicated Workspace".
+                                - Map "camera" or "security" to "CCTV".
+                                - Map "water filter" or "drinking water" to "RO Water".
+                                - Map "stove" or "induction" to "Induction".
+                                - Map "charging" or "electric car" to "EvCharger".
                             4. Return **ONLY valid JSON**. Do not include markdown formatting like \`\`\`json or \`\`\`.
 
                             ### Example
