@@ -11,8 +11,16 @@ const QueryBuilder = require('../Config/queryBuilder');
 const naturalSearch = async (req , res) => {
     try {
         const searchQuery = req.body.searchquery ; 
+        const flag = req.body.flag ; 
 
-        const response = await GenerateContent(searchQuery); 
+        if(!flag || !searchQuery){
+            return res.status(403).json({
+                success : false , 
+                message : "Input Can't Be Empty"
+            });
+        }
+
+        const response = await GenerateContent(searchQuery , flag); 
 
         const Query = await QueryBuilder(response); 
 
@@ -28,11 +36,11 @@ const naturalSearch = async (req , res) => {
         return res.status(200).json({
             success : true , 
             message : "Listing Found SuccessFully" , 
+            response : response ,
             query : Query ,
             listing : listing
-        })
-
-        
+        }); 
+ 
     }
     
     catch (error) {

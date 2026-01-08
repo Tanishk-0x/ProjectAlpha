@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router() ; 
 const isAuth = require('../Middlewares/authMiddleware'); 
 const Upload = require('../Middlewares/multer');
-const {addListing , getListing , findListing , updateListing , deleteListing , rateListing , searchListing} = require('../Controllers/listingController'); 
+const {addListing , getListing , findListing , updateListing , deleteListing , rateListing , searchListing , GenerateDescription} = require('../Controllers/listingController'); 
 const naturalSearch = require('../Controllers/naturalSearch');
 
 router.post('/add' , isAuth , Upload.fields([
@@ -27,6 +27,8 @@ router.post('/ratings/:id' , isAuth , rateListing);
 router.get('/search' , searchListing); 
 
 router.post('/naturalsearch' , naturalSearch); 
+
+router.post('/generatedesc' , GenerateDescription); 
 
 
 module.exports = router ; 

@@ -1,8 +1,8 @@
 const GenerateByGroq = require('./ai.service'); 
 
-const GenerateContent = async ( searchquery ) => {
+const GenerateContent = async ( searchquery , flag ) => {
     try {
-        const response = await GenerateByGroq( searchquery ) ; 
+        const response = await GenerateByGroq( searchquery , flag ) ; 
 
         const result = JSON.parse(response); 
         return result ; 

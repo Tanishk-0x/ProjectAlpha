@@ -1,6 +1,7 @@
 const uploadOnCloudinary = require('../Config/cloudinary'); 
 const Listing = require('../Models/listingModel'); 
 const User = require('../Models/userModel'); 
+const GenerateContent = require('../GroqAI/ai.controller'); 
 
 const addListing = async (req , res) => {
     try {
@@ -237,4 +238,32 @@ const searchListing = async (req , res) => {
     }
 }
 
-module.exports = {addListing , getListing , findListing , updateListing , deleteListing , rateListing , searchListing} ; 
+const GenerateDescription = async (req , res) => {
+    try {
+        const { searchquery , flag } = req.body ; 
+
+        if(!searchquery || !flag){
+            return res.status(403).json({
+                success : false , 
+                message : "Input Can't Be Empty"
+            })
+        }
+
+        const response = await GenerateContent( searchquery , flag ); 
+
+        return res.status(200).json({
+            success : true , 
+            message : "Description Generated SuccessFully" , 
+            desc : response 
+        }); 
+    }
+    
+    catch (error) {
+        return res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Generating Description ${error}`
+        })
+    }
+}
+
+module.exports = {addListing , getListing , findListing , updateListing , deleteListing , rateListing , searchListing , GenerateDescription} ; 
