@@ -9,6 +9,7 @@ import { authDataContext } from '../Context/AuthContext';
 import {toast} from 'react-hot-toast'
 import { IoStar } from "react-icons/io5";
 import { bookingDataContext } from '../Context/BookingContext';
+import { GiConfirmed } from "react-icons/gi";
 
 const ViewCard = () => {
 
@@ -151,13 +152,13 @@ const ViewCard = () => {
 
   return (
 
-    <div className='w-full h-screen bg-white flex items-center justify-center gap-2.5 flex-col overflow-auto relative'>
+    <div className='w-full h-screen md:h-auto flex items-center justify-center gap-2.5 flex-col overflow-y-auto relative'>
           
         <div className='h-10 w-10 bg-[red] rounded-full flex justify-center items-center top-[5%] left-5 absolute'>
             <button className='cursor-pointer' onClick={() => navigate('/')}><FaArrowLeftLong /></button>
         </div>
     
-        <div className='w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-2.5'>
+        <div className='mt-0 md:mt-8 w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-2.5'>
             <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-[70px] md:px-0'>
                 {`In ${cardDetails.landmark.toUpperCase()} , ${cardDetails.city.toUpperCase()}`}
             </h1>
@@ -181,17 +182,32 @@ const ViewCard = () => {
     
         </div>
     
-        <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
+        <div className=' bg-gray-200 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
             {`${cardDetails.title.toUpperCase()} ${cardDetails.category.toUpperCase()} , ${cardDetails.landmark.toUpperCase()}`}
         </div>
-        <div className='text-gray-800 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
+
+        {/* ----- Amenities ---- */}
+        {
+          cardDetails.amenities && cardDetails.amenities.length > 0 && 
+            <div className='w-[95%] md:w-[80%] flex flex-wrap gap-2 overflow-auto'>
+            {
+              cardDetails.amenities.map((item) => (
+                <div className='bg-gray-300 text-black rounded-lg p-2'>
+                  <span className='flex flex-row  items-center justify-center gap-1'> {item} <span className='text-green-700'><GiConfirmed/></span> </span> 
+                </div>
+              ))
+            }
+          </div>
+        }
+
+        <div className='text-gray-800 bg-gray-200 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
             {`${cardDetails.description.toUpperCase()}`}
         </div>
-        <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
+        <div className='w-[95%] bg-gray-200 flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
             {`Rs.${cardDetails.rent}/day`}
         </div>
     
-        <div className='w-[95%] h-[50px] flex items-center justify-center px-[100px] gap-2.5 md:justify-start'>
+        <div className=' mb-0 md:mb-6 ml-0 md:ml-8 w-[95%] h-[50px] flex items-center justify-center px-[100px] gap-2.5 md:justify-start'>
             {
               cardDetails.host == userData._id 
               ?
