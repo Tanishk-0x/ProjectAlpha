@@ -16,7 +16,7 @@ const NaturalSearchContext = ({children}) => {
     const HandleNaturalSearch = async (searchquery) => {
         try {
             const res = await axios.post(serverUrl + '/listing/naturalsearch' , 
-                {searchquery : searchquery} , {withCredentials : true}
+                {searchquery : searchquery , flag : '0'} , {withCredentials : true}
             ); 
 
             setSearchListings(res.data.listing); 
