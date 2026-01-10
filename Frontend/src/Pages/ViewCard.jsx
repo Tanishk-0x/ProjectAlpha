@@ -10,6 +10,8 @@ import {toast} from 'react-hot-toast'
 import { IoStar } from "react-icons/io5";
 import { bookingDataContext } from '../Context/BookingContext';
 import { GiConfirmed } from "react-icons/gi";
+import { FaWhatsapp } from "react-icons/fa";
+
 
 const ViewCard = () => {
 
@@ -150,6 +152,16 @@ const ViewCard = () => {
     }
   }
 
+  // Handle Whatsapp Connect 
+  const HandleWhatsappConnect = (phone , title) => {
+    const phoneno = Number(phone); 
+    // create message , embeded url , redirect 
+    toast.success("Redirecting to whatsapp"); 
+    const msg = `Hi! I'm interested in these listing: ${title} . Is it available? ` ; 
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}` ; 
+    window.open(url , "_blank") ; 
+  }
+
   return (
 
     <div className='w-full h-screen md:h-auto flex items-center justify-center gap-2.5 flex-col overflow-y-auto relative'>
@@ -209,16 +221,22 @@ const ViewCard = () => {
     
         <div className=' mb-0 md:mb-6 ml-0 md:ml-8 w-[95%] h-[50px] flex items-center justify-center px-[100px] gap-2.5 md:justify-start'>
             {
-              cardDetails.host == userData._id 
+              cardDetails.host?._id == userData._id 
               ?
               <button onClick={() => setShowUpdatePopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer text-nowrap'>
                 Edit Listing
               </button>
-              
               :
-              <button onClick={() => setShowBookingPopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
-                Reserve
-              </button>
+              <div className='flex flex-row gap-2 mt-3 mb-3 '>
+                <button onClick={() => setShowBookingPopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
+                  Reserve
+                </button>
+
+                <button onClick={() => HandleWhatsappConnect(cardDetails.host.phone , title)}
+                className='flex flex-row px-3 py-2.5 rounded-lg bg-green-400 border border-green-800 justify-center items-center gap-1 cursor-pointer text-nowrap'>
+                  <FaWhatsapp /> Conect on Whatsapp 
+                </button>
+              </div>
             }
 
         </div>
