@@ -63,6 +63,11 @@ const listingSchema = new mongoose.Schema({
         default : [] 
     },
 
+    viewCount : {
+        type : Number , 
+        default : 0 
+    }, 
+
     isBooked : {
         type : Boolean , 
         default : false 

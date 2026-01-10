@@ -81,6 +81,10 @@ const findListing = async (req , res) => {
             });
         }
 
+        listing.viewCount = listing.viewCount + 1 ; 
+        await listing.save();
+        
+
         return res.status(200).json({
             success : true , 
             message : "Listing Found SuccessFully" , 
