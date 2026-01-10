@@ -31,4 +31,31 @@ const getCurrentUser = async (req , res) => {
     }
 }
 
-module.exports = getCurrentUser;
+const AddPhone = async (req , res) => {
+    try {
+        const phone = req.body.phone ; 
+        const user = await User.findById(req.userId); 
+        if(!user){
+            return res.status(404).json({
+                success : false , 
+                message : "User Not Found"
+            }); 
+        }
+        user.phone = phone ; 
+        await user.save() ; 
+
+        return res.status(200).json({
+            success : true , 
+            message : "Phone Number Added SuccessFully"
+        }); 
+    }
+    
+    catch (error) {
+        return res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Adding Phone no: ${error}`
+        });     
+    }
+}
+
+module.exports = {getCurrentUser , AddPhone};

@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         required : true 
     },
 
+    phone : {
+        type : String , 
+        default : ''
+    },
+
     listing : [{
         type : mongoose.Schema.Types.ObjectId , 
         ref : "Listing" 

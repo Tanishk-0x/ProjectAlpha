@@ -72,7 +72,7 @@ const getListing = async (req , res) => {
 const findListing = async (req , res) => {
     try {
         const {id} = req.params ; 
-        const listing = await Listing.findById(id); 
+        const listing = await Listing.findById(id).populate('host' , 'name email phone')
 
         if(!listing){
             return res.status(404).json({
