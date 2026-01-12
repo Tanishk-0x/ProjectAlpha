@@ -11,6 +11,7 @@ import { IoStar } from "react-icons/io5";
 import { bookingDataContext } from '../Context/BookingContext';
 import { GiConfirmed } from "react-icons/gi";
 import { FaWhatsapp } from "react-icons/fa";
+import { GoDotFill } from "react-icons/go";
 
 
 const ViewCard = () => {
@@ -164,62 +165,69 @@ const ViewCard = () => {
 
   return (
 
-    <div className='w-full h-screen md:h-auto flex items-center justify-center gap-2.5 flex-col overflow-y-auto relative'>
+    <div className='w-full h-full min-h-screen md:h-auto flex items-center justify-start md:justify-center gap-2.5 flex-col overflow-y-auto relative'>
           
         <div className='h-10 w-10 bg-[red] rounded-full flex justify-center items-center top-[5%] left-5 absolute'>
             <button className='cursor-pointer' onClick={() => navigate('/')}><FaArrowLeftLong /></button>
         </div>
     
-        <div className='mt-0 md:mt-8 w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-2.5'>
-            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-[70px] md:px-0'>
+        <div className='mt-0 md:mt-8 w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-1'>
+            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-2 md:px-0 font-semibold'>
                 {`In ${cardDetails.landmark.toUpperCase()} , ${cardDetails.city.toUpperCase()}`}
             </h1>
         </div>
     
-        <div className='w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row'>
+        <div className='w-[95%] h-auto md:h-[400px] flex gap-1 items-center justify-center flex-col md:w-[80%] md:flex-row'>
     
-            <div className='w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-2 border-[white]'>
+            <div className='w-full h-[250px] md:h-full md:w-[70%] rounded-lg overflow-hidden flex items-center justify-center border-2 border-[white]'>
                 <img src={cardDetails.image1} alt="" className='w-full' />
             </div>
     
-            <div className='w-full h-[30%] flex items-center justify-center md:w-[30%] md:h-full md:flex-col'>
-                <div className='w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
+            <div className='w-full h-[120px] md:h-full flex items-center gap-1 justify-center md:w-[30%] md:flex-col'>
+                <div className='w-full h-full rounded-lg overflow-hidden flex items-center justify-center border-2 border-[white] '>
                     <img src={cardDetails.image2} alt="" className='w-full'/>
                 </div>
     
-                <div className='w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
+                <div className='w-full h-full rounded-lg overflow-hidden flex items-center justify-center border-2 border-[white] '>
                     <img src={cardDetails.image3} alt="" className='w-full'/>
                 </div>
             </div>
     
         </div>
-    
-        <div className=' bg-gray-200 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`${cardDetails.title.toUpperCase()} ${cardDetails.category.toUpperCase()} , ${cardDetails.landmark.toUpperCase()}`}
+
+        <div className='w-[95%] py-1 border flex-row border-gray-300 bg-[##f5f5f5] border-t-0 px-2 rounded-lg flex items-center justify-between text-[18px] md:w-[80%] md:text-[25px] '>
+            <div className='flex flex-col gap-0'>
+              <span>{`${cardDetails.title.toUpperCase()}  .  ${cardDetails.category.toUpperCase()}`}</span>
+              <span className='text-[12px] text-gray-600'>{cardDetails.landmark}</span>
+            </div>
+            <div className='px-2 '>
+              {`₹ ${cardDetails.rent} /day`}
+            </div>
         </div>
 
-        {/* ----- Amenities ---- */}
-        {
-          cardDetails.amenities && cardDetails.amenities.length > 0 && 
-            <div className='w-[95%] md:w-[80%] flex flex-wrap gap-2 overflow-auto'>
-            {
-              cardDetails.amenities.map((item) => (
-                <div className='bg-gray-300 text-black rounded-lg p-2'>
-                  <span className='flex flex-row  items-center justify-center gap-1'> {item} <span className='text-green-700'><GiConfirmed/></span> </span> 
-                </div>
-              ))
-            }
+        <div className=' w-[95%] flex flex-col md:flex-row  items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
+          <div className=' w-full md:w-[50%] px-2'>
+            <p className='text-[24px]'> About This Property</p>
+            <p className='text-[18px] text-gray-700'> {cardDetails.description.toUpperCase()} </p>
           </div>
-        }
+           
+          {/* ----- Amenities ---- */}
+          {
+          cardDetails.amenities && cardDetails.amenities.length > 0 && 
+              <div className='mt-2 md:mt-0 w-full md:w-[50%] flex flex-wrap gap-2 overflow-auto'>
+              {
+                cardDetails.amenities.map((item) => (
+                  <div className='bg-gray-200 text-black rounded-lg text-[15px] p-2'>
+                    <span className='flex flex-row  items-center justify-center gap-1'> {item} <span className='text-green-700'><GiConfirmed/></span> </span> 
+                  </div>
+                ))
+              }
+            </div>
+          }
+          </div>
 
-        <div className='text-gray-800 bg-gray-200 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`${cardDetails.description.toUpperCase()}`}
-        </div>
-        <div className='w-[95%] bg-gray-200 flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`Rs.${cardDetails.rent}/day`}
-        </div>
-    
-        <div className=' mb-0 md:mb-6 ml-0 md:ml-8 w-[95%] h-[50px] flex items-center justify-center px-[100px] gap-2.5 md:justify-start'>
+   
+        <div className='w-[95%] md:w-[80%]'>
             {
               cardDetails.host?._id == userData._id 
               ?
@@ -227,14 +235,14 @@ const ViewCard = () => {
                 Edit Listing
               </button>
               :
-              <div className='flex flex-row gap-2 mt-3 mb-3 '>
+              <div className='flex flex-col md:flex-row gap-2 mt-3 mb-3 '>
                 <button onClick={() => setShowBookingPopUp(true)} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg cursor-pointer'>
                   Reserve
                 </button>
 
                 <button onClick={() => HandleWhatsappConnect(cardDetails.host.phone , title)}
                 className='flex flex-row px-3 py-2.5 rounded-lg bg-green-400 border border-green-800 justify-center items-center gap-1 cursor-pointer text-nowrap'>
-                  <FaWhatsapp /> Conect on Whatsapp 
+                  <FaWhatsapp /> Connect on Whatsapp 
                 </button>
               </div>
             }

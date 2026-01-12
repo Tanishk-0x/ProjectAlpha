@@ -188,21 +188,21 @@ const ListingPage1 = () => {
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
                 <label htmlFor="img1" className='text-[20px]'>Image1</label>
                 <div className='flex items-center justify-center w-[90%] h-10 border-[#555656] border-2 rounded-[10px]'>
-                  <input type="file" onChange={HandleImage1} id='img1' required className='w-full rounded-lg text-[15px] px-2.5' />
+                  <input type="file" onChange={HandleImage1} id='img1'  className='w-full rounded-lg text-[15px] px-2.5' />
                 </div>
               </div>
 
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
                 <label htmlFor="img2" className='text-[20px]'>Image2</label>
                 <div className='flex items-center justify-center w-[90%] h-10 border-[#555656] border-2 rounded-[10px]'>
-                  <input type="file" onChange={HandleImage2} id='img2' required className='w-full rounded-lg text-[15px] px-2.5' />
+                  <input type="file" onChange={HandleImage2} id='img2'  className='w-full rounded-lg text-[15px] px-2.5' />
                 </div>
               </div>
 
               <div className='w-[90%] flex items-start justify-start flex-col gap-2.5' >
                 <label htmlFor="img3" className='text-[20px]'>Image3</label>
                 <div className='flex items-center justify-center w-[90%] h-10 border-[#555656] border-2 rounded-[10px]'>
-                  <input type="file" onChange={HandleImage3} id='img3' required className='w-full rounded-lg text-[15px] px-2.5' />
+                  <input type="file" onChange={HandleImage3} id='img3'  className='w-full rounded-lg text-[15px] px-2.5' />
                 </div>
               </div>
 

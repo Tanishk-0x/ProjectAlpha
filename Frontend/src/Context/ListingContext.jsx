@@ -13,22 +13,22 @@ const ListingContext = ({children}) => {
 
     const {serverUrl} = useContext(authDataContext); 
 
-    const [title , setTitle] = useState(""); 
-    const [description , setDescription] = useState(""); 
-    const [rent , setRent] = useState(""); 
-    const [city , setCity] = useState(""); 
-    const [landmark , setLandmark] = useState(""); 
+    const [title , setTitle] = useState("Beautiful Furnished Villa "); 
+    const [description , setDescription] = useState("Experience the best of Dehradun in this beautifully furnished villa, located near Mall Road with easy access to the airport and railway station, starting at 4000 rent"); 
+    const [rent , setRent] = useState("4000"); 
+    const [city , setCity] = useState("Dehradun"); 
+    const [landmark , setLandmark] = useState("45,MallRoad"); 
     const [category , setCategory] = useState("");
 
-    const [frontEndImage1 , setFrontEndImage1] = useState(null); 
-    const [frontEndImage2 , setFrontEndImage2] = useState(null); 
-    const [frontEndImage3 , setFrontEndImage3] = useState(null); 
+    const [frontEndImage1 , setFrontEndImage1] = useState('https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+    const [frontEndImage2 , setFrontEndImage2] = useState('https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
+    const [frontEndImage3 , setFrontEndImage3] = useState('https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); 
 
     const [backEndImage1 , setBackEndImage1] = useState(null);
     const [backEndImage2 , setBackEndImage2] = useState(null); 
     const [backEndImage3 , setBackEndImage3] = useState(null);
     
-    const [amenities , setAmenities] = useState([]); 
+    const [amenities , setAmenities] = useState(['wifi' , 'pool' , 'ac' , 'geyser' , 'evcharger' , 'balcony' , 'parking' , 'lift' , 'cctv']); 
 
     const [listingData , setListingData] = useState([]); 
     const [newListingData , setNewListingData] = useState([]);

@@ -7,6 +7,8 @@ import { userDataContext } from '../Context/UserContext';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
+import { GiConfirmed } from "react-icons/gi";
+
 
 const ListingPage3 = () => {
 
@@ -29,6 +31,7 @@ const ListingPage3 = () => {
         backEndImage2,setBackEndImage2 , 
         backEndImage3,setBackEndImage3 , 
         adding ,
+        amenities , 
         HandleAddListing ,
     } = useContext(listingDataContext);
 
@@ -69,47 +72,68 @@ const ListingPage3 = () => {
 
   return (
 
-    <div className='w-full h-screen bg-white flex items-center justify-center gap-2.5 flex-col overflow-auto relative'>
+    <div className='w-full h-full min-h-screen md:h-auto flex items-center justify-start md:justify-center gap-1 flex-col overflow-y-auto relative'>
       
         <div className='h-10 w-10 bg-[red] rounded-full flex justify-center items-center top-[5%] left-5 absolute'>
             <button className='cursor-pointer' onClick={() => navigate('/listingpage2')}><FaArrowLeftLong /></button>
         </div>
 
-        <div className='w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-2.5'>
-            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-[70px] md:px-0'>
+        <div className='mt-0 md:mt-8 w-[95%] flex items-start justify-start text-[25px] md:w-[80%] mb-1'>
+            <h1 className='text-[20px] text-[#272727] md:text-[30px] text-ellipsis text-nowrap overflow-hidden px-2 md:px-0 font-semibold'>
                 {`In ${landmark.toUpperCase()} , ${city.toUpperCase()}`}
             </h1>
         </div>
 
-        <div className='w-[95%] h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row'>
+        <div className='w-[95%] gap-1 h-[400px] flex items-center justify-center flex-col md:w-[80%] md:flex-row'>
 
-            <div className='w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-2 border-[white]'>
+            <div className='rounded-lg w-full h-[65%] md:w-[70%] md:h-full overflow-hidden flex items-center justify-center border-2 border-[white]'>
                 <img src={frontEndImage1} alt="" className='w-full' />
             </div>
 
-            <div className='w-full h-[30%] flex items-center justify-center md:w-[30%] md:h-full md:flex-col'>
-                <div className='w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
+            <div className='w-full h-[30%] gap-1 flex items-center justify-center md:w-[30%] md:h-full md:flex-col'>
+                <div className='rounded-lg w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
                     <img src={frontEndImage2} alt="" className='w-full'/>
                 </div>
 
-                <div className='w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
+                <div className='rounded-lg w-full h-full overflow-hidden flex items-center justify-center border-2 border-[white] '>
                     <img src={frontEndImage3} alt="" className='w-full'/>
                 </div>
             </div>
 
         </div>
 
-        <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`${title.toUpperCase()} ${category.toUpperCase()} , ${landmark.toUpperCase()}`}
-        </div>
-        <div className='text-gray-800 w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`${description.toUpperCase()}`}
-        </div>
-        <div className='w-[95%] flex items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
-            {`Rs.${rent}/day`}
+        <div className='w-[95%] py-1 border flex-row border-gray-300 bg-[##f5f5f5] border-t-0 px-2 rounded-lg flex items-center justify-between text-[18px] md:w-[80%] md:text-[25px] '>
+            <div className='flex flex-col gap-0'>
+              <span>{`${title.toUpperCase()}  .  ${category.toUpperCase()}`}</span>
+              <span className='text-[12px] text-gray-600'>{landmark}</span>
+            </div>
+            <div className='px-2 '>
+              {`₹ ${rent} /day`}
+            </div>
         </div>
 
-        <div className='w-[95%] h-[50px] flex items-center justify-start px-[110px]'>
+        <div className=' w-[95%] flex flex-col md:flex-row  items-start justify-start text-[18px] md:w-[80%] md:text-[25px] '>
+                  <div className=' w-full md:w-[50%] px-2'>
+                    <p className='text-[24px]'> About This Property</p>
+                    <p className='text-[18px] text-gray-700'> {description.toUpperCase()} </p>
+                  </div>
+                   
+                  {/* ----- Amenities ---- */}
+                  {
+                  amenities && amenities.length > 0 && 
+                      <div className='mt-2 md:mt-0 w-full md:w-[50%] flex flex-wrap gap-2 overflow-auto'>
+                      {
+                        amenities.map((item) => (
+                          <div className='bg-gray-200 text-black rounded-lg text-[15px] p-2'>
+                            <span className='flex flex-row  items-center justify-center gap-1'> {item} <span className='text-green-700'><GiConfirmed/></span> </span> 
+                          </div>
+                        ))
+                      }
+                    </div>
+                  }
+                </div>
+
+        <div className='w-[95%] md:w-[80%] mt-2 mb-4 px-2'>
             <button disabled={adding} onClick={addListing} className='px-[50px] py-2.5 bg-[red] text-[white] text-[18px] md:px-[100px] rounded-lg right-[5%] bottom-[5%] cursor-pointer'>
                 {adding ? 'Adding..' : 'Add Listing'}
             </button>
