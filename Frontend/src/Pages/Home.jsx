@@ -70,7 +70,7 @@ const Home = () => {
           
           <div className='flex justify-between w-full p-2 items-center border-b h-[10%]'>
             <p className='font-semibold text-gray-700'>
-              Natural Search
+              Smart Search
             </p>
             <button onClick={() => setShowPopUp(false)} className='bg-[red] px-1 py-1 rounded-full cursor-pointer hover:border text-[18px]'>
               <RxCross2 />
@@ -90,7 +90,7 @@ const Home = () => {
                       <img src={item.image1} alt={item.title} className='w-full h-full object-cover'/>
                     </div>
 
-                    <div className='w-[65%] p-2 flex flex-col justify-between'>
+                    <div className='w-[65%] p-2 flex flex-col justify-between overflow-y-auto'>
                       <div>
                         <div className='flex justify-between items-start'>
                           <h4 className='font-bold text-sm truncate w-[70%]'> {item.title} </h4>

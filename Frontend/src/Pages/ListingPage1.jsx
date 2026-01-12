@@ -161,7 +161,7 @@ const ListingPage1 = () => {
                     e.preventDefault() ; 
                     GenerateDescription() ; 
                   }}
-                    className='bg-purple-200 px-2 py-1 rounded-lg border-2 border-purple-700 flex flex-row items-center justify-center cursor-pointer gap-1'
+                    className='bg-red-100 px-2 py-1 rounded-lg border-2 border-red-700 flex flex-row items-center justify-center cursor-pointer gap-1'
                   >
                     { generating ? 'generating..' : <p className='flex flex-row items-center justify-center gap-1'>Generate with Ai <span><IoMdColorWand/></span></p> }
                   </button>
@@ -170,13 +170,13 @@ const ListingPage1 = () => {
                 {
                   showPopUp && 
                   <div className='w-[90%] flex items-center justify-center flex-col gap-2'>
-                    <div onClick={() => setDescription(descriptions.desc1)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                    <div onClick={() => setDescription(descriptions.desc1)} className='bg-red-200 border border-red-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
                       { descriptions.desc1 }
                     </div>
-                    <div onClick={() => setDescription(descriptions.desc2)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                    <div onClick={() => setDescription(descriptions.desc2)} className='bg-red-200 border border-red-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
                       { descriptions.desc2 }
                     </div>
-                    <div onClick={() => setDescription(descriptions.desc3)} className='bg-purple-100 border border-purple-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
+                    <div onClick={() => setDescription(descriptions.desc3)} className='bg-red-200 border border-red-700 rounded-lg px-2 py-1 cursor-pointer hover:border-2'>
                       { descriptions.desc3 }
                     </div>
                   </div>
