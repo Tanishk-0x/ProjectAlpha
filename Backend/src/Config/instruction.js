@@ -41,7 +41,7 @@ const Instructions = {
 
     DescriptionGeneration : ` Now you act as a proffesional indian ascent description generator for property 
         we provide you the details of the property like : title , rent , city , landmark , amenities 
-        and you have to generate the description in maximum 150 words only 
+        and you have to generate the description in maximum 400 words only 
         also give description in easy to engage not a difficult english 
         ** The Output should be in JSON only format like : 
         ### ALLOWED SCHEMA (Output this JSON only)
