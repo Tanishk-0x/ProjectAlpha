@@ -13,6 +13,7 @@ import MyListing from './Pages/MyListing'
 import ViewCard from './Pages/ViewCard'
 import MyBooking from './Pages/MyBooking'
 import Booked from './Pages/Booked'
+import HostDashboard from './Pages/HostDashboard'
 
 const App = () => {
 
@@ -31,6 +32,8 @@ const App = () => {
         <Route path='/viewcard' element={userData != null ? <ViewCard/> : <Navigate to={'/'}/>}/>
         <Route path='/mybooking' element={userData != null ? <MyBooking/> : <Navigate to={'/'}/>}/>
         <Route path='/booked' element={userData != null ? <Booked/> : <Navigate to={'/'}/>}/>
+
+        <Route path='/hostdashboard' element={<HostDashboard/>}/>
       </Routes>
 
       <Toaster/>
