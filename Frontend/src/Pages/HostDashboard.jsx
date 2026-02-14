@@ -3,6 +3,8 @@ import { CiDollar } from "react-icons/ci";
 import { GoClock } from "react-icons/go";
 import { PiChartLineUp } from "react-icons/pi";
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { CiHome } from "react-icons/ci";
+import { useState } from "react";
 
 
 const HostDashboard = () => {
@@ -146,9 +148,98 @@ const HostDashboard = () => {
             }
     ];
 
+    const requestsDummyData = [
+        {
+            "listing" : "Yellow House" , 
+            "checkIn" : "2026-02-03" ,
+            "checkOut": "2026-02-07" , 
+            "guest" : "Tanmay Verma" , 
+        }, 
+        {
+            "listing" : "Green House" , 
+            "checkIn" : "2026-02-03" ,
+            "checkOut": "2026-02-07" , 
+            "guest" : "Satyam Nayak" , 
+        },
+        {
+            "listing" : "Blue House" , 
+            "checkIn" : "2026-02-03" ,
+            "checkOut": "2026-02-07" , 
+            "guest" : "Keshav Solanki" , 
+        },
+        {
+            "listing" : "Orange House" , 
+            "checkIn" : "2026-02-03" ,
+            "checkOut": "2026-02-07" , 
+            "guest" : "Mohit Nayak" , 
+        },
+        {
+            "listing" : "Purple House" , 
+            "checkIn" : "2026-02-03" ,
+            "checkOut": "2026-02-07" , 
+            "guest" : "Adarsh Verma" , 
+        },
+    ]; 
+
+    const timelineDummyData = [
+        {
+            "guest" : "Mohan Verma" ,
+            "CheckIn" : "2-02-2026" , 
+            "CheckOut" : "6-02-2026" , 
+            "landmark" : "dadarEast" , 
+            "city" : "mumbai" , 
+            "rent" : "1500" , 
+            "title" : "Yellow Bedroom" ,
+            "image1": "https://res.cloudinary.com/dhwwgg0u9/image/upload/v1764685551/nuzcgurwnbt4scpqpciy.jpg",
+        },
+        {
+            "guest" : "Mohan Verma" ,
+            "CheckIn" : "2-02-2026" , 
+            "CheckOut" : "6-02-2026" , 
+            "landmark" : "dadarEast" , 
+            "city" : "mumbai" , 
+            "rent" : "1500" , 
+            "title" : "Yellow Bedroom" ,
+            "image1": "https://res.cloudinary.com/dhwwgg0u9/image/upload/v1764685551/nuzcgurwnbt4scpqpciy.jpg",
+        },
+        {
+            "guest" : "Mohan Verma" ,
+            "CheckIn" : "2-02-2026" , 
+            "CheckOut" : "6-02-2026" , 
+            "landmark" : "dadarEast" , 
+            "city" : "mumbai" , 
+            "rent" : "1500" , 
+            "title" : "Yellow Bedroom" ,
+            "image1": "https://res.cloudinary.com/dhwwgg0u9/image/upload/v1764685551/nuzcgurwnbt4scpqpciy.jpg",
+        },
+        {
+            "guest" : "Mohan Verma" ,
+            "CheckIn" : "2-02-2026" , 
+            "CheckOut" : "6-02-2026" , 
+            "landmark" : "dadarEast" , 
+            "city" : "mumbai" , 
+            "rent" : "1500" , 
+            "title" : "Yellow Bedroom" ,
+            "image1": "https://res.cloudinary.com/dhwwgg0u9/image/upload/v1764685551/nuzcgurwnbt4scpqpciy.jpg",
+        },
+        {
+            "guest" : "Mohan Verma" ,
+            "CheckIn" : "2-02-2026" , 
+            "CheckOut" : "6-02-2026" , 
+            "landmark" : "dadarEast" , 
+            "city" : "mumbai" , 
+            "rent" : "1500" , 
+            "title" : "Yellow Bedroom" ,
+            "image1": "https://res.cloudinary.com/dhwwgg0u9/image/upload/v1764685551/nuzcgurwnbt4scpqpciy.jpg",
+        },
+    ];
+
+    const [showPopUp , setShowPopUp] = useState(false); 
+
+
   return (
 
-    <div className="h-screen w-full flex flex-col  items-center gap-1">
+    <div className="h-screen w-full flex flex-col  items-center gap-1 relative ">
       
       <div className="bg-[#eeeeee] h-[8%] w-[90%] mt-2 rounded-lg flex justify-between items-center px-2">
         <div className="h-full flex items-center justify-center">
@@ -232,6 +323,7 @@ const HostDashboard = () => {
                 </BarChart>
             </div>
 
+            {/* --------- Listings ----------- */}
             <div className=" w-[98%] h-[50%] flex items-center justify-center flex-row gap-2 ">
                 <div className="bg-[#F9F6EE] w-[60%] h-[98%] rounded-lg flex flex-col justify-center items-center">
                     <div className="w-full flex items-start px-4 font-semibold text-[18px]"> Listings: </div>
@@ -268,6 +360,7 @@ const HostDashboard = () => {
                     </div>
                 </div>
 
+                {/* -------- Reviews --------- */}
                 <div className="bg-[#F9F6EE] w-[40%] h-[98%] rounded-lg flex items-center justify-center flex-col gap-2">
                     <div className="w-full flex items-start text-[18px] font-semibold px-4"> Reviews: </div>
                     <div className="bg-[white] w-[95%] h-[90%] mb-2 flex items-center justify-center">
@@ -275,24 +368,95 @@ const HostDashboard = () => {
                     </div>
                 </div>
             </div>
+            
         </div>
 
         <div className=" h-full w-[35%] flex flex-col gap-2 items-center justify-center">
+            
+            {/* ------- Requests ---------- */}
             <div className="bg-[#F9F6EE] h-[48%] w-[98%] rounded-lg flex flex-col items-center justify-center gap-1">
                 <div className="w-full px-4 items-start font-semibold text-[18px]"> Pending Requests: </div>
-                <div className="bg-white w-[95%] h-[85%] px-4 flex items-center justify-center rounded-lg mb-2">
-                    All requests here ..
+                <div className="bg-white w-[95%] h-[85%] px-4 flex items-center overflow-y-auto rounded-lg mb-2 flex-col gap-2 py-2">
+                    
+                    {
+                        requestsDummyData.map((item,key) => (
+                            <div key={key} className="bg-[#edede3] w-[98%] h-[70px] flex flex-row justify-between items-center gap-2 rounded-lg border-b-2 border-[gray] px-2">
+                                <div className="flex items-center justify-between gap-1 w-[60%] h-full">
+                                    <div className="h-12 w-12 rounded-full bg-red-500 flex items-center justify-center text-[white] font-bold text-[28px] ">
+                                        <GoClock />
+                                    </div>
+                                    <div className="flex flex-col py-1 h-full w-[80%]">
+                                        <div className="text-[16px] font-semibold text-nowrap"> {item.listing} </div>
+                                        <div className="text-[12px] text-[gray] text-nowrap"> {item.guest} </div>
+                                        <div className="text-[14px] text-[red] text-nowrap"> {`${item.checkIn} - ${item.checkOut}`} </div>
+                                    </div>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button className="px-2 py-2 bg-red-500 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
+                                        Reject
+                                    </button>
+                                    <button className="px-2 py-2 bg-red-500 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
+                                        Accept
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
+
+
                 </div>
             </div>
 
+            {/* -------- Timelines --------- */}
             <div className="bg-[#F9F6EE] h-[48%] w-[98%] rounded-lg flex flex-col items-center justify-center gap-1">
                 <div className="w-full px-4 items-start font-semibold text-[18px]"> CheckIn/CheckOut Timeline: </div>
-                <div className="bg-white w-[95%] h-[85%] px-4 flex items-center justify-center rounded-lg mb-2">
-                    All timeline here ..
+                
+                <div className="bg-white w-[95%] h-[85%] py-2 flex items-center flex-col overflow-y-auto gap-2 px-2 rounded-lg mb-2">
+                    
+                    {
+                        timelineDummyData.map((item,key) => (
+                            <div key={key} className="bg-[#edede3] w-[98%] h-20 rounded-lg border-b-2 border-[gray] flex justify-between items-center gap-2">
+                                <div className=" h-full w-[24%]">
+                                    <img src={item.image1} alt="" className="h-full w-full object-cover rounded-lg" />
+                                </div>
+                                <div className="px-1 w-[52%] h-full flex flex-col items-start justify-center">
+                                    <div className="w-full flex items-center justify-between">
+                                        <p className="text-[14px] font-semibold"> {item.title} </p>
+                                        <p className="text-[14px] font-semibold text-[green]"> {`₹${item.rent}`} </p>
+                                    </div>
+                                    <p className="text-[14px]"> {item.guest} </p>
+                                    <p className="text-[14px] font-semibold text-[red]"> {`${item.CheckIn} - ${item.CheckOut}`} </p>
+                                    <p className="text-[gray] text-[12px]"> {`${item.landmark}/${item.city}`} </p>
+                                </div>
+                                <div className="px-2  w-[22%]">
+                                    <button onClick={() => setShowPopUp(true)} className="bg-red-500 px-2 py-2 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
+                                        CheckIn
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    }
+
                 </div>
+
             </div>
+
         </div>
       </div>
+        
+        { showPopUp && 
+            <div className="bg-[#eeeeee] border-2 border-[gray] fixed h-[220px] w-[400px] flex flex-col gap-4 justify-center items-center rounded-lg top-[34%]">
+                <h1 className="text-[28px] font-semibold">Enter Pass Code : </h1>
+                <div>
+                    <input className="w-[250px] h-[50px] bg-white outline-none px-2 text-[28px] border-2 border-[gray] rounded-lg text-[black]"
+                     type="number" name="" id="" />
+                </div>
+                <button onClick={() => setShowPopUp(false)} className="px-4 py-2 bg-red-500 cursor-pointer rounded-lg text-[white] hover:bg-red-600 text-[22px]">
+                    CheckIn
+                </button>
+            </div>
+        }
+      
 
     </div>
 
