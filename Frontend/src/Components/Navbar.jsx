@@ -70,11 +70,20 @@ const Navbar = () => {
         }
     }
 
+    // ----- Debouncing for search -----
+    function Debounce( fn , delay ){
+        let timerId ; 
+        return function(...args){
+            // cancel last call 
+            clearTimeout(timerId);
+            // create new timer
+            timerId = setTimeout(() => {
+                fn(...args); 
+            }, delay);
+        }
+    }
+    const SearchWithDebounce = Debounce(HandleSearch , 500);
 
-    // Search 
-    useEffect(() => {
-        HandleSearch(searchInput); 
-    },[ searchInput ]);
 
     // To open the card based on search 
       const HandleClick = (id) => {
@@ -92,12 +101,12 @@ const Navbar = () => {
 
             <div className='w-screen min-h-20 border-b border-[#dcdcdc] px-5 flex items-center justify-between md:px-10'>
                 
-                <div onClick={() => { console.log("---->" , searchInput)}}>
+                <div >
                     <img src={logo} className='w-[130px] '/>
                 </div>
 
                 <div className='w-[35%] relative hidden md:block '>
-                    <input onChange={(e) => setSearchInput(e.target.value)} value={searchInput}
+                    <input onChange={(e) => SearchWithDebounce(e.target.value)}
                      type="text" placeholder='Any Where  |  Any Location  |  Any City' 
                     className='w-full px-[30px] py-2.5 border-2 border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px]' />
                     <button className='absolute p-2.5 rounded-[50px] bg-[red] right-[2%] top-[5px]'> <FiSearch className='w-5 h-5 text-[white]' /> </button>
@@ -158,7 +167,7 @@ const Navbar = () => {
             
             <div className='w-full flex items-center justify-center mt-2 md:hidden'>
                 <div className='w-[80%] relative'>
-                    <input onChange={(e) => {setSearchInput(e.target.value)}} value={searchInput}
+                    <input onChange={(e) => SearchWithDebounce(e.target.value)} 
                      type="text" placeholder='Any Where  |  Any Location  |  Any City' 
                         className='w-full px-[30px] py-2.5 border-2 border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px]' />
                     <button className='absolute p-2.5 rounded-[50px] bg-[red] right-[2%] top-[5px]'> <FiSearch className='w-5 h-5 text-[white]' /> </button>
