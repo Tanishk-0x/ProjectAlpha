@@ -1,6 +1,14 @@
 const Booking = require('../Models/bookingModel'); 
 const Listing = require('../Models/listingModel'); 
 const User = require('../Models/userModel'); 
+const SendMail = require('../Config/sendMail');
+
+/*
+1. create booking (status = pending)
+2. approve booking (status= approved), (passcode Generated), (email send), ( show in Upcoming HOST)
+3. checkIn - with passcode ( show in active booking )
+4. complete - delete the booking 
+*/
 
 const createBooking = async (req , res) => {
     try {
@@ -82,6 +90,59 @@ const createBooking = async (req , res) => {
     }
 }
 
+// ------ Approve Booking (request) -------
+
+const GeneratePassCode = () => {
+    return Math.floor(1000 + Math.random() * 9000); 
+}
+
+const ApproveBooking = async (req , res) => {
+    try {
+        const {id} = req.params ;
+        
+        const booking = await Booking.findById(id).populate("guest" , "email");  
+
+        // check for booking exist or not?
+        if(!booking){
+            res.status(404).json({
+                success : false ,
+                message : "Booking Not Found"
+            });
+        }
+
+        // approving status 
+        booking.status = "approved"; 
+
+        // Generating Passcode 
+        const PassCode = GeneratePassCode(); 
+
+        // setting passCode 
+        booking.passCode = PassCode ; 
+        
+        // extract guest email to send mail 
+        const email = booking?.guest.email ; 
+
+        // send mail
+        const mail = await SendMail(email , PassCode); 
+
+        await booking.save();
+
+        return res.status(200).json({
+            success : true , 
+            message : "Approved! Email has been sent" , 
+        });
+    }
+    
+    catch (error) {
+       res.status(500).json({
+            success : false , 
+            message : `An Error Occured While Approving Booking : ${error}`
+        }); 
+    }
+}
+
+// ----------------------------------------
+
 const cancelBooking = async (req , res) => {
     try {
         const {id} = req.params ; 
@@ -113,4 +174,4 @@ const cancelBooking = async (req , res) => {
     }
 }
 
-module.exports = {createBooking , cancelBooking}
+module.exports = {createBooking , cancelBooking , ApproveBooking}
