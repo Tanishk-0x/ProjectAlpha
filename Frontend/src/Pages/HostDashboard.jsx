@@ -3,11 +3,15 @@ import { CiDollar } from "react-icons/ci";
 import { GoClock } from "react-icons/go";
 import { PiChartLineUp } from "react-icons/pi";
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
-import { CiHome } from "react-icons/ci";
-import { useState } from "react";
-
+import { useContext, useState } from "react";
+import { userDataContext } from "../Context/UserContext";
+import { useNavigate } from 'react-router-dom';
 
 const HostDashboard = () => {
+
+    const navigate = useNavigate(); 
+
+    const { userData } = useContext(userDataContext);
 
     // ---- Dummy Data For Chart ----
     const data = [
@@ -251,8 +255,8 @@ const HostDashboard = () => {
                     T
                 </div>
                 <div>
-                    <p className="text-red-500 font-semibold">Welcome, <span className="text-black">Tanishk</span></p>
-                    <p className="text-[gray]">tanishknamdev981@gmail.com</p>
+                    <p className="text-red-500 font-semibold">Welcome, <span className="text-black"> {userData?.name} </span></p>
+                    <p className="text-[gray]"> {userData?.email} </p>
                 </div>
             </div>
             <button className="bg-[red] h-10  w-20 rounded-lg cursor-pointer font-semibold text-[white] hover:bg-red-600">
@@ -302,10 +306,10 @@ const HostDashboard = () => {
             <div className="w-full flex items-start px-4 font-semibold">
                 Quick Actions:
             </div>
-            <button className="bg-red-500 w-[90%] py-1 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
+            <button onClick={() => navigate('/listingpage1') } className="bg-red-500 w-[90%] py-1 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
                 Add New Listing
             </button>
-            <button className="bg-red-500 w-[90%] py-1 rounded-lg cursor-pointer text-[white] hover:bg-red-600 mb-1">
+            <button onClick={() => navigate('/') } className="bg-red-500 w-[90%] py-1 rounded-lg cursor-pointer text-[white] hover:bg-red-600 mb-1">
                 Back To Home
             </button>
         </div>
