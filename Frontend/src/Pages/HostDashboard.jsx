@@ -3,15 +3,25 @@ import { CiDollar } from "react-icons/ci";
 import { GoClock } from "react-icons/go";
 import { PiChartLineUp } from "react-icons/pi";
 import { BarChart, Bar, XAxis, YAxis } from 'recharts';
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { userDataContext } from "../Context/UserContext";
 import { useNavigate } from 'react-router-dom';
+import { hostDataContext } from "../Context/HostContext";
 
 const HostDashboard = () => {
 
     const navigate = useNavigate(); 
 
     const { userData } = useContext(userDataContext);
+
+    const { 
+        getHostData , 
+        pending , 
+        approved , 
+        ongoing ,
+        approveBooking , 
+        isApproving , 
+    } = useContext(hostDataContext); 
 
     // ---- Dummy Data For Chart ----
     const data = [
@@ -240,13 +250,17 @@ const HostDashboard = () => {
 
     const [showPopUp , setShowPopUp] = useState(false); 
 
+    useEffect(() => {
+        getHostData(); 
+    }, []); 
+
 
   return (
 
     <div className="h-screen w-full flex flex-col  items-center gap-1 relative ">
       
       <div className="bg-[#eeeeee] h-[8%] w-[90%] mt-2 rounded-lg flex justify-between items-center px-2">
-        <div className="h-full flex items-center justify-center">
+        <div onClick={() => approveBooking('699087c5bb6b0e785d8411dc')} className="h-full flex items-center justify-center">
             <img src="./Airbnb-Logo.png" alt="" className="w-[130px]"/>
         </div>
         <div className="flex flex-row items-center justify-center gap-4">
@@ -259,7 +273,7 @@ const HostDashboard = () => {
                     <p className="text-[gray]"> {userData?.email} </p>
                 </div>
             </div>
-            <button className="bg-[red] h-10  w-20 rounded-lg cursor-pointer font-semibold text-[white] hover:bg-red-600">
+            <button onClick={() => navigate('/')} className="bg-[red] h-10  w-20 rounded-lg cursor-pointer font-semibold text-[white] hover:bg-red-600">
                 Logout
             </button>
         </div>
@@ -272,7 +286,7 @@ const HostDashboard = () => {
             </div>
             <div className="h-15 text-[white] text-nowrap">
                 <p>Total Listings:</p>
-                <p className="text-[28px] font-semibold">00</p>
+                <p className="text-[28px] font-semibold"> {userData?.listing?.length} </p>
             </div>
         </div>
         <div className="bg-red-600 w-[20%] h-[80%] rounded-lg flex items-center justify-start px-5 gap-4">
@@ -290,7 +304,7 @@ const HostDashboard = () => {
             </div>
             <div className="h-15 text-[white] text-nowrap">
                 <p>Pending Requests</p>
-                <p className="text-[28px] font-semibold">00</p>
+                <p className="text-[28px] font-semibold"> {pending?.length} </p>
             </div>
         </div>
         <div className="bg-red-600 w-[20%] h-[80%] rounded-lg flex items-center justify-start px-5 gap-4">
@@ -335,7 +349,7 @@ const HostDashboard = () => {
                     <div className="bg-[white] py-2 w-[98%] max-h-[220px] h-[95%] mb-2 flex items-center overflow-y-auto flex-col gap-3">
                         
                         {
-                            listingsDummyData.map((item,key) => (
+                            userData?.listing.map((item,key) => (
                                 <div key={key} className="bg-[#edede3] h-[110px] w-[95%] flex flex-row rounded-lg">
                                     <div className="h-full w-[30%] flex items-center justify-center">
                                         <img src={item.image1} alt="" className="rounded-lg w-[95%] h-[95%] object-cover" />
@@ -383,24 +397,25 @@ const HostDashboard = () => {
                 <div className="bg-white w-[95%] h-[85%] px-4 flex items-center overflow-y-auto rounded-lg mb-2 flex-col gap-2 py-2">
                     
                     {
-                        requestsDummyData.map((item,key) => (
+                        pending.map((item,key) => (
                             <div key={key} className="bg-[#edede3] w-[98%] h-[70px] flex flex-row justify-between items-center gap-2 rounded-lg border-b-2 border-[gray] px-2">
                                 <div className="flex items-center justify-between gap-1 w-[60%] h-full">
                                     <div className="h-12 w-12 rounded-full bg-red-500 flex items-center justify-center text-[white] font-bold text-[28px] ">
                                         <GoClock />
                                     </div>
                                     <div className="flex flex-col py-1 h-full w-[80%]">
-                                        <div className="text-[16px] font-semibold text-nowrap"> {item.listing} </div>
-                                        <div className="text-[12px] text-[gray] text-nowrap"> {item.guest} </div>
-                                        <div className="text-[14px] text-[red] text-nowrap"> {`${item.checkIn} - ${item.checkOut}`} </div>
+                                        <div className="text-[16px] font-semibold text-nowrap"> {item.listing.title} </div>
+                                        <div className="text-[12px] text-[gray] text-nowrap"> {item.guest.name} </div>
+                                        <div className="text-[14px] text-[red] text-nowrap"> {`${item.checkIn.split('T')[0]} - ${item.checkOut.split('T')[0]}`} </div>
                                     </div>
                                 </div>
                                 <div className="flex gap-2">
                                     <button className="px-2 py-2 bg-red-500 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
                                         Reject
                                     </button>
-                                    <button className="px-2 py-2 bg-red-500 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
-                                        Accept
+                                    <button onClick={() => approveBooking(item._id)}
+                                    className="px-2 py-2 bg-red-500 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
+                                        { isApproving ? 'Approving..' : 'Approve'}
                                     </button>
                                 </div>
                             </div>
@@ -418,19 +433,19 @@ const HostDashboard = () => {
                 <div className="bg-white w-[95%] h-[85%] py-2 flex items-center flex-col overflow-y-auto gap-2 px-2 rounded-lg mb-2">
                     
                     {
-                        timelineDummyData.map((item,key) => (
+                        approved.map((item,key) => (
                             <div key={key} className="bg-[#edede3] w-[98%] h-20 rounded-lg border-b-2 border-[gray] flex justify-between items-center gap-2">
                                 <div className=" h-full w-[24%]">
-                                    <img src={item.image1} alt="" className="h-full w-full object-cover rounded-lg" />
+                                    <img src={item.listing.image1} alt="" className="h-full w-full object-cover rounded-lg" />
                                 </div>
                                 <div className="px-1 w-[52%] h-full flex flex-col items-start justify-center">
                                     <div className="w-full flex items-center justify-between">
-                                        <p className="text-[14px] font-semibold"> {item.title} </p>
-                                        <p className="text-[14px] font-semibold text-[green]"> {`₹${item.rent}`} </p>
+                                        <p className="text-[14px] font-semibold"> {item.listing.title} </p>
+                                        <p className="text-[14px] font-semibold text-[green]"> {`₹${item.totalRent}`} </p>
                                     </div>
-                                    <p className="text-[14px]"> {item.guest} </p>
-                                    <p className="text-[14px] font-semibold text-[red]"> {`${item.CheckIn} - ${item.CheckOut}`} </p>
-                                    <p className="text-[gray] text-[12px]"> {`${item.landmark}/${item.city}`} </p>
+                                    <p className="text-[14px]"> {item.guest.name} </p>
+                                    <p className="text-[14px] font-semibold text-[red]"> {`${item.checkIn.split('T')[0]} - ${item.checkOut.split('T')[0]}`} </p>
+                                    <p className="text-[gray] text-[12px]"> {`${item.listing.landmark}/${item.listing.city}`} </p>
                                 </div>
                                 <div className="px-2  w-[22%]">
                                     <button onClick={() => setShowPopUp(true)} className="bg-red-500 px-2 py-2 rounded-lg cursor-pointer text-[white] hover:bg-red-600">
