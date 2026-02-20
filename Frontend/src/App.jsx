@@ -14,6 +14,8 @@ import ViewCard from './Pages/ViewCard'
 import MyBooking from './Pages/MyBooking'
 import Booked from './Pages/Booked'
 import HostDashboard from './Pages/HostDashboard'
+import WaitingPage from './Pages/WaitingPage'
+import BookingConfirm from './Pages/BookingConfirm'
 
 const App = () => {
 
@@ -34,6 +36,8 @@ const App = () => {
         <Route path='/booked' element={userData != null ? <Booked/> : <Navigate to={'/'}/>}/>
 
         <Route path='/hostdashboard' element={<HostDashboard/>}/>
+        <Route path='/waiting' element={<WaitingPage/>} />
+        <Route path='/confirm' element={<BookingConfirm/>} />
       </Routes>
 
       <Toaster/>
